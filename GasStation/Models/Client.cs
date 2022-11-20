@@ -25,12 +25,14 @@ namespace GasStation.Models
 
         public void setName(string name)
         {
-            this.name = name;
+                this.name = name;
+
+            
         }
 
         public void setCpf(string cpf)
         {
-            this.cpf = cpf;
+                this.cpf = cpf;
         }
 
         public void setPhone(string phone)
@@ -47,6 +49,15 @@ namespace GasStation.Models
         {
             this.address = address;
         }
+
+        public bool fieldsIsCompleted(Client client)
+        {
+            if (client.phone.Length<11 && client.phone2.Length<11) throw new Exception("Preencha pelo menos um dos telefones");
+            if (client.address.cep.Length<8) throw new Exception("Preencha o Cep");
+            if (client.address.uf=="") throw new Exception("Escolha um estado");
+                return true;
+        }
+
         #endregion
     }
 }

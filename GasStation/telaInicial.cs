@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GasStation.View.User;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,8 +19,14 @@ namespace GasStation
 
         private void cadastrarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            cadUsuario cadastrar = new();
+            cadUser cadastrar = new();
             cadastrar.Show();
+        }
+
+        private void alterarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            updateUser update = new();
+            update.Show();
         }
     }
 }

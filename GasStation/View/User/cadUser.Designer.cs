@@ -1,6 +1,6 @@
 ﻿namespace GasStation
 {
-    partial class cadUsuario
+    partial class cadUser
     {
         /// <summary>
         /// Required designer variable.

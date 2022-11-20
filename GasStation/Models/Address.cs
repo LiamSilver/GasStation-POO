@@ -15,16 +15,16 @@ namespace GasStation.Models
 
         #region attributes
         public string cep { get; set; }
-        public string logradouro { get; set; }
+        public string? logradouro { get; set; }
 
         public string bairro { get; set; }
-        public string localidade { get; set; }
+        public string? localidade { get; set; }
         public string uf { get; set; }
 
         #endregion
 
 
-        #region cep
+        #region Methods
         public Address? cepSearch(string cep)
         {
                 RestResponse restResponse = zipCodeRestConnection(cep);
@@ -48,7 +48,33 @@ namespace GasStation.Models
 
             return restResponse;
 
-            #endregion
         }
+
+        public void setCep(string cep) {
+
+            this.cep = cep;
+        }
+
+        public void setStreet(string street)
+        {
+            this.logradouro = street.ToUpper();
+        }
+
+        public void setNeighbourhood(string neighbourhood)
+        {
+            this.bairro = neighbourhood;
+        }
+
+        public void setCity(string city)
+        {
+            this.localidade = city.ToUpper();
+        }
+
+        public void setState(string state)
+        {
+            this.uf = state;
+        }
+        #endregion
+
     }
 }

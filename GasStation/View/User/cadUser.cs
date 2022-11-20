@@ -9,9 +9,9 @@ using System.Text.Json.Serialization;
 
 namespace GasStation
 {
-    public partial class cadUsuario : Form
+    public partial class cadUser : Form
     {
-        public cadUsuario()
+        public cadUser()
         {
             InitializeComponent();
         }
@@ -55,11 +55,11 @@ namespace GasStation
 
         private Address getAddress(Address address)
         {
-            address.cep = mtxbZipCode.Text.ToUpper();
-            address.bairro = txbNeighbourhood.Text.ToUpper();
-            address.localidade = txbCity.Text.ToUpper();
-            address.uf = cbxState.Text.ToUpper();
-            address.logradouro = txbStreet.Text.ToUpper();
+            address.setCep(mtxbZipCode.Text);
+            address.setNeighbourhood(txbNeighbourhood.Text);
+            address.setCity(txbCity.Text);
+            address.setState(cbxState.Text);
+            address.setStreet(txbStreet.Text);
             return address;
         }
 
@@ -87,6 +87,7 @@ namespace GasStation
             if(hasNameAndCpf()==true)
             {
                 addClient();
+
             }
             else
             {
@@ -94,9 +95,8 @@ namespace GasStation
                 txbName.Focus();
                 return;
             }
-
-            cleanFields();
             txbName.Focus();
+
 
         }
 
@@ -104,32 +104,44 @@ namespace GasStation
         {
             try
             {
-                Address address = new();
-                address = getAddress(address);
-
-                Client client = new();
-                client = getClient(client, address);
-
                 string connectionString = ConfigurationManager.ConnectionStrings["GasStation"].ConnectionString;
 
                 UserDAL DAL = new(new SqlConnection(connectionString));
 
-                DAL.Inserir(client);
+                Client client = getData();
+
+                addUser(DAL, client);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Não foi possível realizar o cadastro! \nMotivo do erro: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void addUser(UserDAL DAL, Client client)
+        {
+            if (DAL.checkCpfExistence(client.cpf) == false && client.fieldsIsCompleted(client) == true)
+            {
+                DAL.Insert(client);
 
                 MessageBox.Show("Cadastro realizado", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cleanFields();
             }
-            catch (Exception)
-            {
-                MessageBox.Show("Não foi possível realizar o cadastro!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+        }
+
+        private Client getData()
+        {
+            Address address = new();
+            address = getAddress(address);
+
+            Client client = new();
+            client = getClient(client, address);
+            return client;
         }
 
         private void cleanFields()
         {
-            txbCity.Text = "";
-            txbName.Text = "";
-            txbNeighbourhood.Text = "";
-            txbStreet.Text = "";
+            cleanAdress();
             mtxbCpf.Text = "";
             mtxbPhone.Text = "";
             mtxbPhone2.Text = "";

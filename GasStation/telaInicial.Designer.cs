@@ -90,6 +90,7 @@
             this.alterarToolStripMenuItem.Name = "alterarToolStripMenuItem";
             this.alterarToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
             this.alterarToolStripMenuItem.Text = "Alterar";
+            this.alterarToolStripMenuItem.Click += new System.EventHandler(this.alterarToolStripMenuItem_Click);
             // 
             // excluirToolStripMenuItem
             // 
@@ -109,13 +110,13 @@
             // dadosToolStripMenuItem
             // 
             this.dadosToolStripMenuItem.Name = "dadosToolStripMenuItem";
-            this.dadosToolStripMenuItem.Size = new System.Drawing.Size(172, 28);
+            this.dadosToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
             this.dadosToolStripMenuItem.Text = "Dados";
             // 
             // históricoToolStripMenuItem
             // 
             this.históricoToolStripMenuItem.Name = "históricoToolStripMenuItem";
-            this.históricoToolStripMenuItem.Size = new System.Drawing.Size(172, 28);
+            this.históricoToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
             this.históricoToolStripMenuItem.Text = "Histórico";
             // 
             // bombaDeCombustívelToolStripMenuItem

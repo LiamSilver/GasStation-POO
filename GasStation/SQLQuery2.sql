@@ -1,0 +1,1 @@
+﻿dbcc checkident(tbCOMBUSTIVEL, RESEED, 0)

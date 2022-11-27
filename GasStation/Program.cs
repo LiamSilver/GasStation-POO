@@ -1,3 +1,5 @@
+using GasStation.Models;
+using GasStation.View.Pump;
 using GasStation.View.User;
 
 namespace GasStation
@@ -13,7 +15,7 @@ namespace GasStation
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new updateUser());
+            Application.Run(new pumpControl());
         }
     }
 }

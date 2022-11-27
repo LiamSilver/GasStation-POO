@@ -34,12 +34,10 @@
             this.alterarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.excluirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.históricoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bombaDeCombustívelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alterarPreçoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.abastecerABombaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vendaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.adicionarClienteNaFilaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.realizarVendaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.históricoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ultimas24HorasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,6 +45,9 @@
             this.ultimoMêsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selecionarDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ajudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.adicionarNaFilaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tirarDaFilaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.filaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.msNavegacao.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -81,49 +82,34 @@
             // cadastrarToolStripMenuItem
             // 
             this.cadastrarToolStripMenuItem.Name = "cadastrarToolStripMenuItem";
-            this.cadastrarToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
+            this.cadastrarToolStripMenuItem.Size = new System.Drawing.Size(176, 28);
             this.cadastrarToolStripMenuItem.Text = "Cadastrar";
             this.cadastrarToolStripMenuItem.Click += new System.EventHandler(this.cadastrarToolStripMenuItem_Click);
             // 
             // alterarToolStripMenuItem
             // 
             this.alterarToolStripMenuItem.Name = "alterarToolStripMenuItem";
-            this.alterarToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
+            this.alterarToolStripMenuItem.Size = new System.Drawing.Size(176, 28);
             this.alterarToolStripMenuItem.Text = "Alterar";
             this.alterarToolStripMenuItem.Click += new System.EventHandler(this.alterarToolStripMenuItem_Click);
             // 
             // excluirToolStripMenuItem
             // 
             this.excluirToolStripMenuItem.Name = "excluirToolStripMenuItem";
-            this.excluirToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
+            this.excluirToolStripMenuItem.Size = new System.Drawing.Size(176, 28);
             this.excluirToolStripMenuItem.Text = "Excluir";
+            this.excluirToolStripMenuItem.Click += new System.EventHandler(this.excluirToolStripMenuItem_Click);
             // 
             // consultarToolStripMenuItem
             // 
-            this.consultarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.dadosToolStripMenuItem,
-            this.históricoToolStripMenuItem});
             this.consultarToolStripMenuItem.Name = "consultarToolStripMenuItem";
-            this.consultarToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
+            this.consultarToolStripMenuItem.Size = new System.Drawing.Size(176, 28);
             this.consultarToolStripMenuItem.Text = "Consultar";
-            // 
-            // dadosToolStripMenuItem
-            // 
-            this.dadosToolStripMenuItem.Name = "dadosToolStripMenuItem";
-            this.dadosToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
-            this.dadosToolStripMenuItem.Text = "Dados";
-            // 
-            // históricoToolStripMenuItem
-            // 
-            this.históricoToolStripMenuItem.Name = "históricoToolStripMenuItem";
-            this.históricoToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
-            this.históricoToolStripMenuItem.Text = "Histórico";
             // 
             // bombaDeCombustívelToolStripMenuItem
             // 
             this.bombaDeCombustívelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.alterarPreçoToolStripMenuItem,
-            this.abastecerABombaToolStripMenuItem});
+            this.alterarPreçoToolStripMenuItem});
             this.bombaDeCombustívelToolStripMenuItem.Name = "bombaDeCombustívelToolStripMenuItem";
             this.bombaDeCombustívelToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
             this.bombaDeCombustívelToolStripMenuItem.Text = "Bomba de combustível";
@@ -131,28 +117,35 @@
             // alterarPreçoToolStripMenuItem
             // 
             this.alterarPreçoToolStripMenuItem.Name = "alterarPreçoToolStripMenuItem";
-            this.alterarPreçoToolStripMenuItem.Size = new System.Drawing.Size(261, 28);
-            this.alterarPreçoToolStripMenuItem.Text = "Alterar preço";
-            // 
-            // abastecerABombaToolStripMenuItem
-            // 
-            this.abastecerABombaToolStripMenuItem.Name = "abastecerABombaToolStripMenuItem";
-            this.abastecerABombaToolStripMenuItem.Size = new System.Drawing.Size(261, 28);
-            this.abastecerABombaToolStripMenuItem.Text = "Abastecer a bomba";
+            this.alterarPreçoToolStripMenuItem.Size = new System.Drawing.Size(168, 28);
+            this.alterarPreçoToolStripMenuItem.Text = "Controle";
             // 
             // vendaToolStripMenuItem
             // 
             this.vendaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.realizarVendaToolStripMenuItem});
+            this.adicionarClienteNaFilaToolStripMenuItem,
+            this.realizarVendaToolStripMenuItem,
+            this.filaToolStripMenuItem});
             this.vendaToolStripMenuItem.Name = "vendaToolStripMenuItem";
             this.vendaToolStripMenuItem.Size = new System.Drawing.Size(78, 28);
             this.vendaToolStripMenuItem.Text = "Venda";
             // 
+            // adicionarClienteNaFilaToolStripMenuItem
+            // 
+            this.adicionarClienteNaFilaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.adicionarNaFilaToolStripMenuItem,
+            this.tirarDaFilaToolStripMenuItem});
+            this.adicionarClienteNaFilaToolStripMenuItem.Name = "adicionarClienteNaFilaToolStripMenuItem";
+            this.adicionarClienteNaFilaToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
+            this.adicionarClienteNaFilaToolStripMenuItem.Text = "Cliente";
+            this.adicionarClienteNaFilaToolStripMenuItem.Click += new System.EventHandler(this.adicionarClienteNaFilaToolStripMenuItem_Click);
+            // 
             // realizarVendaToolStripMenuItem
             // 
             this.realizarVendaToolStripMenuItem.Name = "realizarVendaToolStripMenuItem";
-            this.realizarVendaToolStripMenuItem.Size = new System.Drawing.Size(218, 28);
-            this.realizarVendaToolStripMenuItem.Text = "Realizar venda";
+            this.realizarVendaToolStripMenuItem.Size = new System.Drawing.Size(295, 28);
+            this.realizarVendaToolStripMenuItem.Text = "Realizar abastecimento";
+            this.realizarVendaToolStripMenuItem.Click += new System.EventHandler(this.realizarVendaToolStripMenuItem_Click);
             // 
             // históricoToolStripMenuItem1
             // 
@@ -195,6 +188,24 @@
             this.ajudaToolStripMenuItem.Size = new System.Drawing.Size(74, 28);
             this.ajudaToolStripMenuItem.Text = "Ajuda";
             // 
+            // adicionarNaFilaToolStripMenuItem
+            // 
+            this.adicionarNaFilaToolStripMenuItem.Name = "adicionarNaFilaToolStripMenuItem";
+            this.adicionarNaFilaToolStripMenuItem.Size = new System.Drawing.Size(231, 28);
+            this.adicionarNaFilaToolStripMenuItem.Text = "Adicionar na fila";
+            // 
+            // tirarDaFilaToolStripMenuItem
+            // 
+            this.tirarDaFilaToolStripMenuItem.Name = "tirarDaFilaToolStripMenuItem";
+            this.tirarDaFilaToolStripMenuItem.Size = new System.Drawing.Size(231, 28);
+            this.tirarDaFilaToolStripMenuItem.Text = "Tirar da fila";
+            // 
+            // filaToolStripMenuItem
+            // 
+            this.filaToolStripMenuItem.Name = "filaToolStripMenuItem";
+            this.filaToolStripMenuItem.Size = new System.Drawing.Size(295, 28);
+            this.filaToolStripMenuItem.Text = "Fila";
+            // 
             // telaInicial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
@@ -222,11 +233,8 @@
         private ToolStripMenuItem alterarToolStripMenuItem;
         private ToolStripMenuItem excluirToolStripMenuItem;
         private ToolStripMenuItem consultarToolStripMenuItem;
-        private ToolStripMenuItem dadosToolStripMenuItem;
-        private ToolStripMenuItem históricoToolStripMenuItem;
         private ToolStripMenuItem bombaDeCombustívelToolStripMenuItem;
         private ToolStripMenuItem alterarPreçoToolStripMenuItem;
-        private ToolStripMenuItem abastecerABombaToolStripMenuItem;
         private ToolStripMenuItem vendaToolStripMenuItem;
         private ToolStripMenuItem realizarVendaToolStripMenuItem;
         private ToolStripMenuItem históricoToolStripMenuItem1;
@@ -235,5 +243,9 @@
         private ToolStripMenuItem ultimoMêsToolStripMenuItem;
         private ToolStripMenuItem selecionarDataToolStripMenuItem;
         private ToolStripMenuItem ajudaToolStripMenuItem;
+        private ToolStripMenuItem adicionarClienteNaFilaToolStripMenuItem;
+        private ToolStripMenuItem adicionarNaFilaToolStripMenuItem;
+        private ToolStripMenuItem tirarDaFilaToolStripMenuItem;
+        private ToolStripMenuItem filaToolStripMenuItem;
     }
 }

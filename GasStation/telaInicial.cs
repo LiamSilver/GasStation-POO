@@ -1,13 +1,4 @@
 ﻿using GasStation.View.User;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 namespace GasStation
 {
     public partial class telaInicial : Form
@@ -27,6 +18,22 @@ namespace GasStation
         {
             updateUser update = new();
             update.Show();
+        }
+
+        private void excluirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            deleteUser delete = new();
+            delete.Show();
+        }
+
+        private void adicionarClienteNaFilaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void realizarVendaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

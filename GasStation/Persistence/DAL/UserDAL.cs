@@ -66,6 +66,18 @@ namespace GasStation.Persistence.DAL
             _sqlConnection.Close();
         }
 
+        public void Delete(string cpf)
+        {
+            _sqlConnection.Open();
+            SqlCommand command = _sqlConnection.CreateCommand();
+
+            command.CommandText = $"DELETE FROM tbCLIENTE WHERE Cpf = '{cpf}'";
+
+            command.ExecuteNonQuery();
+
+            _sqlConnection.Close();
+        }
+
         public Client SearchOne(string cpf)
         {
             Client client = new();
@@ -76,7 +88,7 @@ namespace GasStation.Persistence.DAL
             SqlCommand command = _sqlConnection.CreateCommand();
 
             command.Parameters.AddWithValue("@Cpf", cpf);
-            int result = searchCpf(command);
+            int result = hasCpf(command);
 
             if (result != 1)
             {
@@ -118,7 +130,7 @@ namespace GasStation.Persistence.DAL
             client.setAddress(address);
         }
 
-        private static int searchCpf(SqlCommand command)
+        private static int hasCpf(SqlCommand command)
         {
             command.CommandText = "SELECT COUNT(Cpf) FROM tbCLIENTE WHERE Cpf = @Cpf";
             int result = (int)command.ExecuteScalar();
@@ -131,7 +143,7 @@ namespace GasStation.Persistence.DAL
             SqlCommand command = _sqlConnection.CreateCommand();
             command.Parameters.AddWithValue("@Cpf", cpf);
 
-            int result = searchCpf(command);
+            int result = hasCpf(command);
             _sqlConnection.Close();
 
             if (result != 0)

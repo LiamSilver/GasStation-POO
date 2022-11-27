@@ -12,7 +12,7 @@ namespace GasStation.View.User
             InitializeComponent();
         }
 
-        public void unlockFields()
+        private void unlockFields()
         {
             if (btnSearch.Text == "Buscar")
             {
@@ -50,7 +50,7 @@ namespace GasStation.View.User
 
         }
 
-        public void cleanFields() {
+        private void cleanFields() {
             txbName.Text = "";
             txbCity.Text = "";
             txbNeighbourhood.Text = "";
@@ -158,6 +158,11 @@ namespace GasStation.View.User
         }
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            if (txbName.Text != "ADMIN")
+            {
+                MessageBox.Show("Não é possivel alterar o nome do usuario ADMIN", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             try
             {
                 string connectionString = ConfigurationManager.ConnectionStrings["GasStation"].ConnectionString;

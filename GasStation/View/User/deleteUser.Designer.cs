@@ -118,11 +118,11 @@
             // mtxbZipCode
             // 
             this.mtxbZipCode.Enabled = false;
-            this.mtxbZipCode.Font = new System.Drawing.Font("Montserrat", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.mtxbZipCode.Font = new System.Drawing.Font("Montserrat", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.mtxbZipCode.Location = new System.Drawing.Point(462, 224);
             this.mtxbZipCode.Mask = "00000-000";
             this.mtxbZipCode.Name = "mtxbZipCode";
-            this.mtxbZipCode.Size = new System.Drawing.Size(92, 28);
+            this.mtxbZipCode.Size = new System.Drawing.Size(92, 26);
             this.mtxbZipCode.TabIndex = 60;
             this.mtxbZipCode.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             this.mtxbZipCode.ValidatingType = typeof(int);

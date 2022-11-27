@@ -1,4 +1,5 @@
-﻿using GasStation.View.User;
+﻿using GasStation.View.Pump;
+using GasStation.View.User;
 namespace GasStation
 {
     public partial class telaInicial : Form
@@ -34,6 +35,18 @@ namespace GasStation
         private void realizarVendaToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void alterarPreçoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pumpControl pump = new();
+            pump.Show();
+        }
+
+        private void consultarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            consultUser consult = new();
+            consult.Show();
         }
     }
 }

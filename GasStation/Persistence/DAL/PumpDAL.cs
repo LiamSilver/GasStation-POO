@@ -43,10 +43,30 @@ namespace GasStation.Persistence.DAL
             SqlDataReader reader = command.ExecuteReader();
 
             read(pump, fuel, reader);
-
             _sqlConnection.Close();
 
             return pump;
+
+        }
+
+        public int countPump()
+        {
+            int count;
+
+            
+            _sqlConnection.Open();
+
+            string SQL = "SELECT COUNT(CodBomba)" +
+            "FROM tbBOMBA_COMBUSTIVEL";
+
+            SqlCommand command = _sqlConnection.CreateCommand();
+            command.CommandText= SQL;
+
+            count = (int) command.ExecuteScalar();
+
+            _sqlConnection.Close();
+
+            return count;
         }
 
         private static void read(FuelPump pump, Fuel fuel, SqlDataReader reader)

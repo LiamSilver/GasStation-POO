@@ -1,4 +1,5 @@
 ﻿using GasStation.View.Pump;
+using GasStation.View.Sale;
 using GasStation.View.User;
 namespace GasStation
 {
@@ -34,7 +35,8 @@ namespace GasStation
 
         private void realizarVendaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            saleGas sale = new();
+            sale.Show();
         }
 
         private void alterarPreçoToolStripMenuItem_Click(object sender, EventArgs e)

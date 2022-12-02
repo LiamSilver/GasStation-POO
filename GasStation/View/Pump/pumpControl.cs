@@ -34,9 +34,7 @@ namespace GasStation.View.Pump
                 FuelPump pump = new();
 
                 pump = dal.getPump(CodPump);
-
                 fillFields(pump);
-
             }
             catch (Exception ex)
             {
@@ -71,7 +69,6 @@ namespace GasStation.View.Pump
                 FuelPump pump = getDataPump(++CodPump);
                 fillFields(pump);
                 btnPreviousPump.Enabled = true;
-
             }
             catch (Exception ex)
             {

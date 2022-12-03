@@ -44,8 +44,23 @@
             this.lblPump = new System.Windows.Forms.Label();
             this.lblFuel = new System.Windows.Forms.Label();
             this.cbFuel = new System.Windows.Forms.ComboBox();
+            this.tcSale = new System.Windows.Forms.TabControl();
+            this.tcMoney = new System.Windows.Forms.TabPage();
+            this.lblQtdLiter = new System.Windows.Forms.Label();
+            this.lblLiterByMoney = new System.Windows.Forms.Label();
+            this.lblLiter = new System.Windows.Forms.Label();
+            this.txbMoney = new System.Windows.Forms.TextBox();
+            this.tcLiter = new System.Windows.Forms.TabPage();
+            this.lblMoneyByLiters = new System.Windows.Forms.Label();
+            this.nudLiter = new System.Windows.Forms.NumericUpDown();
+            this.lblMoneyByLiter = new System.Windows.Forms.Label();
+            this.lblSellLiter = new System.Windows.Forms.Label();
             this.gbClient.SuspendLayout();
             this.gbFuel.SuspendLayout();
+            this.tcSale.SuspendLayout();
+            this.tcMoney.SuspendLayout();
+            this.tcLiter.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudLiter)).BeginInit();
             this.SuspendLayout();
             // 
             // lblCpf
@@ -218,11 +233,133 @@
             this.cbFuel.SelectedIndexChanged += new System.EventHandler(this.cbFuel_SelectedIndexChanged);
             this.cbFuel.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbFuel_KeyPress);
             // 
+            // tcSale
+            // 
+            this.tcSale.Appearance = System.Windows.Forms.TabAppearance.Buttons;
+            this.tcSale.Controls.Add(this.tcMoney);
+            this.tcSale.Controls.Add(this.tcLiter);
+            this.tcSale.Location = new System.Drawing.Point(35, 324);
+            this.tcSale.Name = "tcSale";
+            this.tcSale.SelectedIndex = 0;
+            this.tcSale.Size = new System.Drawing.Size(343, 204);
+            this.tcSale.TabIndex = 5;
+            // 
+            // tcMoney
+            // 
+            this.tcMoney.Controls.Add(this.lblQtdLiter);
+            this.tcMoney.Controls.Add(this.lblLiterByMoney);
+            this.tcMoney.Controls.Add(this.lblLiter);
+            this.tcMoney.Controls.Add(this.txbMoney);
+            this.tcMoney.Location = new System.Drawing.Point(4, 30);
+            this.tcMoney.Name = "tcMoney";
+            this.tcMoney.Padding = new System.Windows.Forms.Padding(3);
+            this.tcMoney.Size = new System.Drawing.Size(335, 170);
+            this.tcMoney.TabIndex = 0;
+            this.tcMoney.Text = "Dinheiro";
+            this.tcMoney.UseVisualStyleBackColor = true;
+            // 
+            // lblQtdLiter
+            // 
+            this.lblQtdLiter.AutoSize = true;
+            this.lblQtdLiter.Location = new System.Drawing.Point(162, 83);
+            this.lblQtdLiter.Name = "lblQtdLiter";
+            this.lblQtdLiter.Size = new System.Drawing.Size(0, 18);
+            this.lblQtdLiter.TabIndex = 3;
+            // 
+            // lblLiterByMoney
+            // 
+            this.lblLiterByMoney.AutoSize = true;
+            this.lblLiterByMoney.Location = new System.Drawing.Point(6, 83);
+            this.lblLiterByMoney.Name = "lblLiterByMoney";
+            this.lblLiterByMoney.Size = new System.Drawing.Size(46, 18);
+            this.lblLiterByMoney.TabIndex = 2;
+            this.lblLiterByMoney.Text = "Litros:";
+            // 
+            // lblLiter
+            // 
+            this.lblLiter.AutoSize = true;
+            this.lblLiter.Location = new System.Drawing.Point(6, 34);
+            this.lblLiter.Name = "lblLiter";
+            this.lblLiter.Size = new System.Drawing.Size(88, 18);
+            this.lblLiter.TabIndex = 1;
+            this.lblLiter.Text = "Valor em R$:";
+            // 
+            // txbMoney
+            // 
+            this.txbMoney.Location = new System.Drawing.Point(162, 34);
+            this.txbMoney.MaxLength = 6;
+            this.txbMoney.Name = "txbMoney";
+            this.txbMoney.Size = new System.Drawing.Size(87, 23);
+            this.txbMoney.TabIndex = 0;
+            this.txbMoney.TextChanged += new System.EventHandler(this.txbMoney_TextChanged);
+            this.txbMoney.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbMoney_KeyPress);
+            // 
+            // tcLiter
+            // 
+            this.tcLiter.Controls.Add(this.lblMoneyByLiters);
+            this.tcLiter.Controls.Add(this.nudLiter);
+            this.tcLiter.Controls.Add(this.lblMoneyByLiter);
+            this.tcLiter.Controls.Add(this.lblSellLiter);
+            this.tcLiter.Location = new System.Drawing.Point(4, 30);
+            this.tcLiter.Name = "tcLiter";
+            this.tcLiter.Padding = new System.Windows.Forms.Padding(3);
+            this.tcLiter.Size = new System.Drawing.Size(335, 170);
+            this.tcLiter.TabIndex = 1;
+            this.tcLiter.Text = "Litros";
+            this.tcLiter.UseVisualStyleBackColor = true;
+            // 
+            // lblMoneyByLiters
+            // 
+            this.lblMoneyByLiters.AutoSize = true;
+            this.lblMoneyByLiters.Location = new System.Drawing.Point(136, 81);
+            this.lblMoneyByLiters.Name = "lblMoneyByLiters";
+            this.lblMoneyByLiters.Size = new System.Drawing.Size(0, 18);
+            this.lblMoneyByLiters.TabIndex = 7;
+            // 
+            // nudLiter
+            // 
+            this.nudLiter.Location = new System.Drawing.Point(138, 27);
+            this.nudLiter.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudLiter.Name = "nudLiter";
+            this.nudLiter.ReadOnly = true;
+            this.nudLiter.Size = new System.Drawing.Size(126, 23);
+            this.nudLiter.TabIndex = 6;
+            this.nudLiter.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudLiter.ValueChanged += new System.EventHandler(this.nudLiter_ValueChanged);
+            this.nudLiter.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nudLiter_KeyPress);
+            // 
+            // lblMoneyByLiter
+            // 
+            this.lblMoneyByLiter.AutoSize = true;
+            this.lblMoneyByLiter.Location = new System.Drawing.Point(6, 81);
+            this.lblMoneyByLiter.Name = "lblMoneyByLiter";
+            this.lblMoneyByLiter.Size = new System.Drawing.Size(88, 18);
+            this.lblMoneyByLiter.TabIndex = 5;
+            this.lblMoneyByLiter.Text = "Valor em R$:";
+            // 
+            // lblSellLiter
+            // 
+            this.lblSellLiter.AutoSize = true;
+            this.lblSellLiter.Location = new System.Drawing.Point(6, 32);
+            this.lblSellLiter.Name = "lblSellLiter";
+            this.lblSellLiter.Size = new System.Drawing.Size(46, 18);
+            this.lblSellLiter.TabIndex = 4;
+            this.lblSellLiter.Text = "Litros:";
+            // 
             // saleGas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(834, 571);
+            this.Controls.Add(this.tcSale);
             this.Controls.Add(this.gbFuel);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.gbClient);
@@ -239,6 +376,12 @@
             this.gbClient.PerformLayout();
             this.gbFuel.ResumeLayout(false);
             this.gbFuel.PerformLayout();
+            this.tcSale.ResumeLayout(false);
+            this.tcMoney.ResumeLayout(false);
+            this.tcMoney.PerformLayout();
+            this.tcLiter.ResumeLayout(false);
+            this.tcLiter.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudLiter)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -262,5 +405,16 @@
         private Label lblFuelPrice;
         private Label lblPump;
         private Label lblLabelFuelAvailable;
+        private TabControl tcSale;
+        private TabPage tcMoney;
+        private TextBox txbMoney;
+        private TabPage tcLiter;
+        private Label lblQtdLiter;
+        private Label lblLiterByMoney;
+        private Label lblLiter;
+        private Label lblMoneyByLiter;
+        private Label lblSellLiter;
+        private NumericUpDown nudLiter;
+        private Label lblMoneyByLiters;
     }
 }

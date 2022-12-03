@@ -132,18 +132,25 @@ namespace GasStation.View.Sale
         private void cbFuel_SelectedIndexChanged(object sender, EventArgs e)
         {
             loadPump();
-
+            updatePriceByLiter();
+            updatePricebyMoney();
         }
 
         private void loadPump()
+        {
+            FuelPump pump = searchPump();
+
+            fillPumpFields(pump);
+        }
+
+        private FuelPump searchPump()
         {
             int cod = cbFuel.SelectedIndex;
             FuelDAL fuel = dbConnectionFuel();
             FuelPump pump = new();
 
             pump = fuel.searchPumpByFuelId(++cod);
-
-            fillPumpFields(pump);
+            return pump;
         }
 
         private void fillPumpFields(FuelPump pump)
@@ -153,6 +160,7 @@ namespace GasStation.View.Sale
             lblPump.Text = pump.descPump;
         }
 
+        #region keypress
         private void saleGas_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = true;
@@ -165,5 +173,84 @@ namespace GasStation.View.Sale
                 e.Handled= true;
             }
         }
+
+        private void txbMoney_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+
+            if (txbMoney.Text.Contains(",") && e.KeyChar == ',')
+            {
+                e.Handled = true;
+                MessageBox.Show("Esse campo aceita apenas uma virgula");
+
+            }
+
+            if (txbMoney.TextLength == 0 && e.KeyChar == ',')
+            {
+                e.Handled = true;
+                MessageBox.Show("Digite um número antes da virgula");
+
+            }
+
+            if (txbMoney.TextLength == 3 && e.KeyChar != ',' && !txbMoney.Text.Contains(",") && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("O valor máximo permitido é de 999,99");
+
+            }
+
+        }
+
+        private void nudLiter_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (nudLiter.Value > nudLiter.Maximum)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void nudLiter_ValueChanged(object sender, EventArgs e)
+        {
+            if (nudLiter.Value > nudLiter.Maximum)
+                nudLiter.Value = nudLiter.Minimum;
+
+            updatePriceByLiter();
+        }
+
+        #endregion
+
+        #region updatePrices
+        private void updatePricebyMoney()
+        {
+            if (txbMoney.Text != "")
+            {
+                FuelPump pump = searchPump();
+                decimal price;
+
+                price = Convert.ToDecimal(txbMoney.Text) / pump.typeFuel.fuelPrice;
+                lblQtdLiter.Text = price.ToString("N2") + " Litros";
+
+            }
+        }
+
+        private void updatePriceByLiter()
+        {
+            FuelPump pump = searchPump();
+
+            decimal price;
+
+            price = nudLiter.Value * pump.typeFuel.fuelPrice;
+            lblMoneyByLiters.Text = price.ToString("N2") + " Reais";
+        }
+
+        private void txbMoney_TextChanged(object sender, EventArgs e)
+        {
+            updatePricebyMoney();
+        }
+
+        #endregion
     }
 }

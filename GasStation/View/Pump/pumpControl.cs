@@ -23,6 +23,7 @@ namespace GasStation.View.Pump
 
 
             loadPump();
+            loadHistoric();
         }
 
         private void loadPump()
@@ -42,8 +43,22 @@ namespace GasStation.View.Pump
                 MessageBox.Show($"{ex.Message}");
             }
         }
+        private void loadHistoric()
+        {
+            try
+            {
+               FuelPump pump = getDataPump(CodPump);
+               FuelDAL dal = dbConnectionFuel();
 
+                dal.searchHistoric(pump.typeFuel.CodCombustivel, dgvHistoric);
 
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show($"{ex.Message}");
+            }
+        }
         private void fillFields(FuelPump pump)
         {
             lblFuelName.Text = pump.typeFuel.descFuel;
@@ -60,6 +75,14 @@ namespace GasStation.View.Pump
             return dal;
         }
 
+        private static FuelDAL dbConnectionFuel()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["GasStation"].ConnectionString;
+            FuelDAL dal = new FuelDAL(new SqlConnection(connectionString));
+            return dal;
+
+        }
+
 
         private void btnNextPump_Click(object sender, EventArgs e)
         {
@@ -69,6 +92,8 @@ namespace GasStation.View.Pump
                 FuelPump pump = getDataPump(++CodPump);
                 fillFields(pump);
                 btnPreviousPump.Enabled = true;
+                dgvHistoric.Rows.Clear();
+                loadHistoric();
             }
             catch (Exception ex)
             {
@@ -85,6 +110,8 @@ namespace GasStation.View.Pump
                 FuelPump pump = getDataPump(--CodPump);
                 fillFields(pump);
                 btnNextPump.Enabled = true;
+                dgvHistoric.Rows.Clear();
+                loadHistoric();
 
             }
             catch (Exception ex)
@@ -152,14 +179,17 @@ namespace GasStation.View.Pump
 
         private void updateFuelPrice()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["GasStation"].ConnectionString;
 
             FuelPump pump = getDataPump(CodPump);
-            FuelDAL dal = new(new SqlConnection(connectionString));
+            FuelDAL dal = dbConnectionFuel();
 
             string value = txbFuelPrice.Text.Replace(".", ",");
             dal.updatePrice(pump.typeFuel.CodCombustivel, Convert.ToDecimal(value));
+            dgvHistoric.Rows.Clear();
+            loadHistoric();
+
         }
+
 
         private void btnCancel_Click(object sender, EventArgs e)
         {

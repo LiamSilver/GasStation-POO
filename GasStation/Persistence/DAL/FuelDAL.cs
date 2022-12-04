@@ -1,6 +1,7 @@
 ﻿using GasStation.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -56,6 +57,32 @@ namespace GasStation.Persistence.DAL
             _sqlConnection.Close();
 
             return pump;
+        }
+
+        public void searchHistoric(int codFuel, DataGridView dgv)
+        {
+            _sqlConnection.Open();
+
+            SqlCommand command = _sqlConnection.CreateCommand();
+            command.CommandText = $"SELECT descCombustivel,precoAntigo,novoPreco, dataAlteracao FROM tbHISTORICO_PRECO_COMBUSTIVEL WHERE tipoCombustivel = {codFuel}";
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            int ncolumns = reader.FieldCount;
+
+            string[] data = new string[ncolumns];
+
+            while(reader.Read())
+            {
+                data[0] = reader.GetString(0);
+                data[1] = reader.GetDecimal(1).ToString();
+                data[2] = reader.GetDecimal(2).ToString();
+                data[3] = reader.GetDateTime(3).ToString();
+
+                dgv.Rows.Add(data);
+            }
+            _sqlConnection.Close();
+
         }
     }
 }

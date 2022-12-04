@@ -20,7 +20,8 @@ namespace GasStation.View.Sale
         {
             InitializeComponent();
             cbCpfAdmin.Focus();
-            searchClient();
+            Client client = searchClient();
+            fillNameAndPhone(client);
             loadFuel();
         }
 
@@ -56,6 +57,13 @@ namespace GasStation.View.Sale
             FuelDAL dal = new FuelDAL(new SqlConnection(connectionString));
             return dal;
         }
+
+        private static SaleDAL dbConnectionSale()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["GasStation"].ConnectionString;
+            SaleDAL dal = new SaleDAL(new SqlConnection(connectionString));
+            return dal;
+        }
         #endregion
         private void cbCpfAdmin_CheckedChanged(object sender, EventArgs e)
         {
@@ -63,57 +71,21 @@ namespace GasStation.View.Sale
             {
                 mtxbCpf.Enabled = true;
                 resetClientFlelds();
+                btnSell.Enabled = false;
             }
 
             else 
             {
                 mtxbCpf.Enabled = false;
-                searchClient();
+                btnSell.Enabled = true;
+                Client client = searchClient();
+                fillNameAndPhone(client);
                 mtxbCpf.Text = "";
                 btnSearchClient.Enabled = false;
              }
 
             mtxbCpf.Focus();
         }
-
-        private void mtxbCpf_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (mtxbCpf.MaskCompleted) btnSearchClient.Enabled = true;
-            else
-            {
-                btnSearchClient.Enabled = false;
-                resetClientFlelds();
-            }
-
-        }
-
-        private void resetClientFlelds()
-        {
-            lblName.Text = "";
-            lblPhone.Text = "";
-        }
-
-        private void btnSearchClient_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                searchClient(mtxbCpf.Text);
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show($"{ex.Message}", "Erro" , MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void searchClient(string cpf = "00000000000")
-        {
-            UserDAL user = dbConnectionUser();
-            Client client = new();
-            client = user.SearchOne(cpf);
-            fillNameAndPhone(client);
-        }
-
         private void fillNameAndPhone(Client client)
         {
             lblName.Text = client.name;
@@ -127,6 +99,61 @@ namespace GasStation.View.Sale
                 lblPhone.Text = "Sem telefone";
             }
 
+        }
+
+        private void mtxbCpf_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (mtxbCpf.MaskCompleted)
+            {
+                btnSearchClient.Enabled = true;
+                if(lblName.Text!="")
+                    btnSell.Enabled = true;
+            }
+            else
+            {
+                btnSearchClient.Enabled = false;
+                if(!cbCpfAdmin.Checked && !mtxbCpf.MaskCompleted)
+                    btnSell.Enabled = false;
+                resetClientFlelds();
+            }
+
+        }
+
+        private void resetClientFlelds()
+        {
+            lblName.Text = "";
+            lblPhone.Text = "";
+        }
+        private void fillPumpFields(FuelPump pump)
+        {
+            lblFuelPrice.Text = "R$ " + Convert.ToString(pump.typeFuel.fuelPrice) + " Litro";
+            lblLabelFuelAvailable.Text = "Combustível disponível: " + pump.fuelAvailable + " Litros";
+            lblPump.Text = pump.descPump;
+        }
+
+        #region Search
+        private void btnSearchClient_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Client client = searchClient(mtxbCpf.Text);
+                fillNameAndPhone(client);
+                btnSell.Enabled = true;
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show($"{ex.Message}", "Erro" , MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private Client searchClient(string cpf = "00000000000")
+        {
+            UserDAL user = dbConnectionUser();
+            Client client = new();
+            client = user.SearchOne(cpf);
+            return client;
         }
 
         private void cbFuel_SelectedIndexChanged(object sender, EventArgs e)
@@ -153,12 +180,7 @@ namespace GasStation.View.Sale
             return pump;
         }
 
-        private void fillPumpFields(FuelPump pump)
-        {
-            lblFuelPrice.Text = "R$ " + Convert.ToString(pump.typeFuel.fuelPrice) + " Litro";
-            lblLabelFuelAvailable.Text = "Combustível disponível: " + pump.fuelAvailable + " Litros";
-            lblPump.Text = pump.descPump;
-        }
+        #endregion
 
         #region keypress
         private void saleGas_KeyPress(object sender, KeyPressEventArgs e)
@@ -252,5 +274,63 @@ namespace GasStation.View.Sale
         }
 
         #endregion
+
+        private void btnSell_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (1==1)
+                {
+                    makeASell();
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show($"{ex.Message}");
+            }
+        }
+
+        private void makeASell()
+        {
+            Sell sell = insertDataInSell();
+            insertLiterInSell(sell);
+
+            SaleDAL sale = dbConnectionSale();
+            sale.sale(sell);
+
+            MessageBox.Show($"Abastecimento realizado com sucesso! Foi abastecido {sell.getAmount().ToString("N2")} Reais", "Abastecimento Concluído", MessageBoxButtons.OK);
+            loadPump();
+        }
+
+        private void insertLiterInSell(Sell sell)
+        {
+            decimal liter = getLiter(sell);
+            sell.liter = liter;
+        }
+
+        private Sell insertDataInSell()
+        {
+            Client client = searchClient(mtxbCpf.Text == "" ? "00000000000" : mtxbCpf.Text);
+            FuelPump pump = searchPump();
+            Sell sell = new(client, pump);
+            return sell;
+        }
+
+        private decimal getLiter(Sell sell)
+        {
+
+            if (tcSale.SelectedTab == tcMoney)
+            {
+                if (txbMoney.Text == "" || Convert.ToDecimal(txbMoney.Text) < 1)
+                    throw new Exception("O valor não pode ser menor que R$ 1,00");
+                return Convert.ToDecimal(txbMoney.Text) / sell.literPrice;
+            }
+            else
+            {
+                return nudLiter.Value;
+            }
+        }
     }
 }

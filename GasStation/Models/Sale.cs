@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GasStation.Models
 {
-    public class Sale
+    public class Sell
     {
-        Sale(Client client, FuelPump pump)
+        public Sell(Client client, FuelPump pump)
         { 
             setClient(client);
             setPump(pump);
@@ -18,7 +18,7 @@ namespace GasStation.Models
         public Client client { get; private set; }
         public FuelPump pump { get; private set; }
         public decimal literPrice { get; private set; }
-        public double liter { get; set; }
+        public decimal liter { get; set; }
 
         public void setLiterPrice(FuelPump pump)
         {
@@ -37,7 +37,7 @@ namespace GasStation.Models
 
         public decimal getAmount()
         {
-            return (decimal)(Convert.ToDouble(literPrice) * liter);
+            return literPrice * liter;
         }
 
 

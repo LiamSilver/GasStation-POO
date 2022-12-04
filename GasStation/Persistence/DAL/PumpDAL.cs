@@ -24,7 +24,6 @@ namespace GasStation.Persistence.DAL
         {
             FuelPump pump = new();
             Fuel fuel = new();
-
             _sqlConnection.Open();
 
             string SQL = "SELECT capacidadeMaxima,DescBomba,QtdCombustivelAtual,ValorCombustivel,DescricaoCombustivel,CodCombustivel " +

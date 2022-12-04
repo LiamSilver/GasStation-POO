@@ -9,6 +9,7 @@ namespace GasStation.Models
 {
      public class FuelPump
     {
+        private int? codPump { get; set; }
         public decimal pumpCapacity{ get; private set; }
 
         public decimal fuelAvailable { get; private set; }
@@ -36,5 +37,17 @@ namespace GasStation.Models
             this.descPump = descPump;
         }
 
+        public void setCodPump(int cod)
+        {
+            this.codPump = cod;
+        }
+
+        public int getCodPump()
+        {
+            if (codPump != null)
+                return (int)codPump;
+            else
+                throw new Exception("Ocorreu um erro");
+        }
     }
 }

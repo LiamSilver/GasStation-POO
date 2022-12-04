@@ -46,6 +46,7 @@ namespace GasStation.Persistence.DAL
             fuel.setCod(reader.GetInt32(0));
             fuel.setFuelPrice(reader.GetDecimal(1));
             fuel.setDesc(reader.GetString(2));
+            pump.setCodPump(reader.GetInt32(3));
             pump.setCapacity(reader.GetDecimal(4));
             pump.setTypeFuel(fuel);
             pump.setDescPump(reader.GetString(6));

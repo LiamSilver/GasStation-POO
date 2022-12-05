@@ -44,7 +44,7 @@ namespace GasStation.View.User
                 Client client = new();
                 client = dal.SearchOne(mtxbCpf.Text);
                 fillFields(client);
-
+                dal.getPurchases(dgvUser, mtxbCpf.Text);
             }
             catch (Exception ex)
             {
@@ -71,6 +71,7 @@ namespace GasStation.View.User
                 mtxbCpf.Text = "";
                 mtxbCpf.Focus();
                 cleanFields();
+                dgvUser.Rows.Clear();
             }
         }
 

@@ -48,6 +48,14 @@
             this.lblStreet = new System.Windows.Forms.Label();
             this.lblZipCode = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
+            this.dgvUser = new System.Windows.Forms.DataGridView();
+            this.cPump = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cFuel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cLiter = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUser)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSearch
@@ -287,11 +295,81 @@
             this.lblTitle.Text = "Consultar Usuário";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // dgvUser
+            // 
+            this.dgvUser.AllowUserToAddRows = false;
+            this.dgvUser.AllowUserToDeleteRows = false;
+            this.dgvUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUser.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.cPump,
+            this.cFuel,
+            this.cLiter,
+            this.cPrice,
+            this.vTotal,
+            this.cDate});
+            this.dgvUser.GridColor = System.Drawing.SystemColors.Control;
+            this.dgvUser.Location = new System.Drawing.Point(77, 402);
+            this.dgvUser.Name = "dgvUser";
+            this.dgvUser.ReadOnly = true;
+            this.dgvUser.RowHeadersWidth = 51;
+            this.dgvUser.RowTemplate.Height = 29;
+            this.dgvUser.Size = new System.Drawing.Size(899, 188);
+            this.dgvUser.TabIndex = 96;
+            // 
+            // cPump
+            // 
+            this.cPump.HeaderText = "Bomba";
+            this.cPump.MinimumWidth = 6;
+            this.cPump.Name = "cPump";
+            this.cPump.ReadOnly = true;
+            this.cPump.Width = 125;
+            // 
+            // cFuel
+            // 
+            this.cFuel.HeaderText = "Combustível";
+            this.cFuel.MinimumWidth = 6;
+            this.cFuel.Name = "cFuel";
+            this.cFuel.ReadOnly = true;
+            this.cFuel.Width = 125;
+            // 
+            // cLiter
+            // 
+            this.cLiter.HeaderText = "Litros";
+            this.cLiter.MinimumWidth = 6;
+            this.cLiter.Name = "cLiter";
+            this.cLiter.ReadOnly = true;
+            this.cLiter.Width = 125;
+            // 
+            // cPrice
+            // 
+            this.cPrice.HeaderText = "Preço";
+            this.cPrice.MinimumWidth = 6;
+            this.cPrice.Name = "cPrice";
+            this.cPrice.ReadOnly = true;
+            this.cPrice.Width = 125;
+            // 
+            // vTotal
+            // 
+            this.vTotal.HeaderText = "Valor Total";
+            this.vTotal.MinimumWidth = 6;
+            this.vTotal.Name = "vTotal";
+            this.vTotal.ReadOnly = true;
+            this.vTotal.Width = 125;
+            // 
+            // cDate
+            // 
+            this.cDate.HeaderText = "Data da Compra";
+            this.cDate.MinimumWidth = 6;
+            this.cDate.Name = "cDate";
+            this.cDate.ReadOnly = true;
+            this.cDate.Width = 125;
+            // 
             // consultUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1066, 421);
+            this.ClientSize = new System.Drawing.Size(1066, 644);
+            this.Controls.Add(this.dgvUser);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.cbxState);
             this.Controls.Add(this.mtxbZipCode);
@@ -320,6 +398,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Consultar Usuário";
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUser)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -347,5 +426,12 @@
         private Label lblStreet;
         private Label lblZipCode;
         private Label lblTitle;
+        private DataGridView dgvUser;
+        private DataGridViewTextBoxColumn cPump;
+        private DataGridViewTextBoxColumn cFuel;
+        private DataGridViewTextBoxColumn cLiter;
+        private DataGridViewTextBoxColumn cPrice;
+        private DataGridViewTextBoxColumn vTotal;
+        private DataGridViewTextBoxColumn cDate;
     }
 }

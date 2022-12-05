@@ -38,11 +38,6 @@
             this.controlPumpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vendaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.realizarVendaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.históricoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.ultimas24HorasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ultimos7DiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ultimoMêsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.selecionarDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ajudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.msNavegacao.SuspendLayout();
             this.SuspendLayout();
@@ -55,7 +50,6 @@
             this.clienteToolStripMenuItem,
             this.bombaDeCombustívelToolStripMenuItem,
             this.vendaToolStripMenuItem,
-            this.históricoToolStripMenuItem1,
             this.ajudaToolStripMenuItem});
             this.msNavegacao.Location = new System.Drawing.Point(0, 0);
             this.msNavegacao.Name = "msNavegacao";
@@ -133,41 +127,6 @@
             this.realizarVendaToolStripMenuItem.Text = "Realizar abastecimento";
             this.realizarVendaToolStripMenuItem.Click += new System.EventHandler(this.realizarVendaToolStripMenuItem_Click);
             // 
-            // históricoToolStripMenuItem1
-            // 
-            this.históricoToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ultimas24HorasToolStripMenuItem,
-            this.ultimos7DiasToolStripMenuItem,
-            this.ultimoMêsToolStripMenuItem,
-            this.selecionarDataToolStripMenuItem});
-            this.históricoToolStripMenuItem1.Name = "históricoToolStripMenuItem1";
-            this.históricoToolStripMenuItem1.Size = new System.Drawing.Size(102, 28);
-            this.históricoToolStripMenuItem1.Text = "Histórico";
-            // 
-            // ultimas24HorasToolStripMenuItem
-            // 
-            this.ultimas24HorasToolStripMenuItem.Name = "ultimas24HorasToolStripMenuItem";
-            this.ultimas24HorasToolStripMenuItem.Size = new System.Drawing.Size(234, 28);
-            this.ultimas24HorasToolStripMenuItem.Text = "Ultimas 24 horas";
-            // 
-            // ultimos7DiasToolStripMenuItem
-            // 
-            this.ultimos7DiasToolStripMenuItem.Name = "ultimos7DiasToolStripMenuItem";
-            this.ultimos7DiasToolStripMenuItem.Size = new System.Drawing.Size(234, 28);
-            this.ultimos7DiasToolStripMenuItem.Text = "Ultimos 7 dias";
-            // 
-            // ultimoMêsToolStripMenuItem
-            // 
-            this.ultimoMêsToolStripMenuItem.Name = "ultimoMêsToolStripMenuItem";
-            this.ultimoMêsToolStripMenuItem.Size = new System.Drawing.Size(234, 28);
-            this.ultimoMêsToolStripMenuItem.Text = "Ultimo mês";
-            // 
-            // selecionarDataToolStripMenuItem
-            // 
-            this.selecionarDataToolStripMenuItem.Name = "selecionarDataToolStripMenuItem";
-            this.selecionarDataToolStripMenuItem.Size = new System.Drawing.Size(234, 28);
-            this.selecionarDataToolStripMenuItem.Text = "Selecionar data";
-            // 
             // ajudaToolStripMenuItem
             // 
             this.ajudaToolStripMenuItem.Name = "ajudaToolStripMenuItem";
@@ -205,11 +164,6 @@
         private ToolStripMenuItem controlPumpToolStripMenuItem;
         private ToolStripMenuItem vendaToolStripMenuItem;
         private ToolStripMenuItem realizarVendaToolStripMenuItem;
-        private ToolStripMenuItem históricoToolStripMenuItem1;
-        private ToolStripMenuItem ultimas24HorasToolStripMenuItem;
-        private ToolStripMenuItem ultimos7DiasToolStripMenuItem;
-        private ToolStripMenuItem ultimoMêsToolStripMenuItem;
-        private ToolStripMenuItem selecionarDataToolStripMenuItem;
         private ToolStripMenuItem ajudaToolStripMenuItem;
     }
 }

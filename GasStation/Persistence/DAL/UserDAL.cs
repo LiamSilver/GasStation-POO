@@ -153,5 +153,32 @@ namespace GasStation.Persistence.DAL
             
             return false;
         }
+
+        public void getPurchases(DataGridView dgv, string cpf = "00000000000")
+        {
+            _sqlConnection.Open();
+
+            SqlCommand command = _sqlConnection.CreateCommand();
+
+            command.CommandText = "SELECT DescBomba, DescricaoCombustivel, QtdLitro, ValorLitro, ValorLitro*QtdLitro, DataVenda" +
+                                  " FROM tbVENDA INNER JOIN tbBOMBA_COMBUSTIVEL ON (tbVENDA.CodBomba = tbBOMBA_COMBUSTIVEL.CodBomba)"+
+                                  $" inner join tbCOMBUSTIVEL on (tbBOMBA_COMBUSTIVEL.TipoCombustivel=tbCOMBUSTIVEL.CodCombustivel) WHERE CpfCliente = '{cpf}'";
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            string[] data = new string[reader.FieldCount];
+            while (reader.Read())
+            {
+                data[0] = reader.GetString(0);
+                data[1] = reader.GetString(1);
+                data[2] = reader.GetDecimal(2).ToString("N2") +" l";
+                data[3] = "R$: "+ reader.GetDecimal(3).ToString("N3");
+                data[4] = "R$: " + reader.GetDecimal(4).ToString("N2");
+                data[5] = reader.GetDateTime(5).Date.ToString();
+
+                dgv.Rows.Add(data);
+            }
+            _sqlConnection.Close();
+        }
     }
 }

@@ -162,7 +162,8 @@ namespace GasStation.Persistence.DAL
 
             command.CommandText = "SELECT DescBomba, DescricaoCombustivel, QtdLitro, ValorLitro, ValorLitro*QtdLitro, DataVenda" +
                                   " FROM tbVENDA INNER JOIN tbBOMBA_COMBUSTIVEL ON (tbVENDA.CodBomba = tbBOMBA_COMBUSTIVEL.CodBomba)"+
-                                  $" inner join tbCOMBUSTIVEL on (tbBOMBA_COMBUSTIVEL.TipoCombustivel=tbCOMBUSTIVEL.CodCombustivel) WHERE CpfCliente = '{cpf}'";
+                                  $" inner join tbCOMBUSTIVEL on (tbBOMBA_COMBUSTIVEL.TipoCombustivel=tbCOMBUSTIVEL.CodCombustivel) WHERE CpfCliente = '{cpf}'"+
+                                  " Order by DataVenda";
 
             SqlDataReader reader = command.ExecuteReader();
 
@@ -171,7 +172,7 @@ namespace GasStation.Persistence.DAL
             {
                 data[0] = reader.GetString(0);
                 data[1] = reader.GetString(1);
-                data[2] = reader.GetDecimal(2).ToString("N2") +" l";
+                data[2] = reader.GetDecimal(2).ToString("N2") +" L";
                 data[3] = "R$: "+ reader.GetDecimal(3).ToString("N3");
                 data[4] = "R$: " + reader.GetDecimal(4).ToString("N2");
                 data[5] = reader.GetDateTime(5).Date.ToString();

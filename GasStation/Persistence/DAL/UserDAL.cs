@@ -98,37 +98,13 @@ namespace GasStation.Persistence.DAL
 
             command.CommandText = $"SELECT * FROM tbCLIENTE WHERE Cpf = '{cpf}'";
 
-            userReader(client, address, command);
-
-            _sqlConnection.Close();
-            return client;
-        }
-
-
-        private static void userReader(Client client, Address address, SqlCommand command)
-        {
             SqlDataReader reader = command.ExecuteReader();
 
             reader.Read();
 
-            setReaderInClient(client, address, reader);
 
             reader.Close();
-        }
 
-        private static void setReaderInClient(Client client, Address address, SqlDataReader reader)
-        {
-            client.setName(reader.GetString(1));
-            client.setCpf(reader.GetString(2));
-            client.setPhone(reader.GetString(3));
-            client.setPhone2(reader.GetString(4));
-            address.setCep(reader.GetString(5));
-            address.setNeighbourhood(reader.GetString(6));
-            address.setCity(reader.GetString(7));
-            address.setState(reader.GetString(8));
-            address.setStreet(reader.GetString(9));
-            client.setAddress(address);
-        }
 
         private static int hasCpf(SqlCommand command)
         {

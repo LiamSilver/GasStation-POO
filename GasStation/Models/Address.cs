@@ -37,7 +37,6 @@ namespace GasStation.Models
                 else
                     return null;
         }
-
         private RestResponse zipCodeRestConnection(string cep)
         {
             RestClient restClient = new RestClient(string.Format($"https://viacep.com.br/ws/{cep}/json/"));
@@ -48,31 +47,6 @@ namespace GasStation.Models
 
             return restResponse;
 
-        }
-
-        public void setCep(string cep) {
-
-            this.cep = cep;
-        }
-
-        public void setStreet(string street)
-        {
-            this.logradouro = street.ToUpper();
-        }
-
-        public void setNeighbourhood(string neighbourhood)
-        {
-            this.bairro = neighbourhood;
-        }
-
-        public void setCity(string city)
-        {
-            this.localidade = city.ToUpper();
-        }
-
-        public void setState(string state)
-        {
-            this.uf = state;
         }
         #endregion
 

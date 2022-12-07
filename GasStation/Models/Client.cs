@@ -4,59 +4,81 @@ namespace GasStation.Models
 {
     public class Client
     {
-
-        public Client()
-        {
-        }
         #region attributes
-        public string name { get; private set; }
+        private string _name;
+        private string _cpf;
+        private string? _phone;
+        private string? _phone2;
+        private Address? _address;
+        #endregion
 
-        public string cpf { get; private set; }
-        public string? phone { get; private set; }
+        #region properties
+        public string name { get { return _name; }
+            private set {
+                if (value == null || value == "") throw new ArgumentNullException(null, "O nome não pode ser nulo ");
+                if (value.Length <= 2) throw new ArgumentOutOfRangeException(null, "Nome pequeno demais");
+                _name = value.ToUpper();
+            }
+        }
 
-        public string? phone2 { get; private set; }
+        public string cpf { get { return _cpf; }
+            private set {
+                if (value.Length != 11) throw new ArgumentOutOfRangeException(null,"Digite todo o CPF");
+                else _cpf = value;
+            }
+        }
+        public string? phone { get { return _phone; }
+            private set
+            {
+                _phone = value;
+            }
+        } 
 
-        public Address address { get; private set; }
-        
+        public string? phone2 { get { return _phone2; }
+            private set 
+            {
+                _phone2 = value;
+            }
+        }
+
+        public Address address { get { return _address; }
+            private set 
+            {
+                _address = value;
+            }
+        }
+
 
         #endregion
 
-        #region methods
+        #region Constructors
 
-        public void setName(string name)
+        public Client(string name, string cpf, string? phone, string? phone2, Address? address)
         {
-                this.name = name;
-
-            
-        }
-
-        public void setCpf(string cpf)
-        {
-                this.cpf = cpf;
-        }
-
-        public void setPhone(string phone)
-        {
+            this.name = name;
+            this.cpf = cpf;
             this.phone = phone;
+            this.phone2 = phone2;
+            this.address = address;
         }
-
-        public void setPhone2(string phone)
+        public Client()
         {
-            this.phone2 = phone;
+        }
+        public Client(string name, string cpf, string? phone, string? phone2)
+        {
+            this.name = name;
+            this.cpf = cpf;
+            this.phone = phone;
+            this.phone2 = phone2;
+
         }
 
-        public void setAddress(Address address)
+        public Client (Address address)
         {
             this.address = address;
         }
-
-        public bool fieldsIsCompleted(Client client)
-        {
-            if (client.phone.Length<11 && client.phone2.Length<11) throw new Exception("Preencha pelo menos um dos telefones");
-            if (client.address.cep.Length<8) throw new Exception("Preencha o Cep");
-            if (client.address.uf=="") throw new Exception("Escolha um estado");
-                return true;
-        }
+        #endregion
+        #region methods
 
         #endregion
     }

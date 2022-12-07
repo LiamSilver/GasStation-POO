@@ -9,45 +9,45 @@ namespace GasStation.Models
 {
      public class FuelPump
     {
-        private int? codPump { get; set; }
-        public decimal pumpCapacity{ get; private set; }
 
-        public decimal fuelAvailable { get; private set; }
+        #region attributes
 
-        public Fuel typeFuel { get; private set; }
-        public string descPump { get; private set; }
+        private int? _codPump;
+        private decimal _pumpCapacity;
+        private decimal _fuelAvailable;
+        private Fuel _typeFuel;
+        private string _namePump;
 
+        #endregion
 
-        public void setCapacity(decimal Capacity)
+        #region properties
+        public int? codPump { get { return _codPump; } private set { if(value!=null) _codPump = (int)value; } }
+        public decimal pumpCapacity{ get { return _pumpCapacity; } private set { _pumpCapacity = value; } }
+
+        public decimal fuelAvailable { get { return _fuelAvailable; } private set { _fuelAvailable = value; } }
+
+        public Fuel typeFuel { get { return _typeFuel; } private set { _typeFuel = value; } }
+        public string namePump { get { return _namePump; } private set { _namePump = value; } }
+
+        #endregion
+
+        #region constructors
+
+        public FuelPump()
         {
-            pumpCapacity = Capacity;
+
         }
 
-        public void setFuelAvailable(decimal FuelAvailable)
+        public FuelPump(int? codPump, decimal pumpCapacity, decimal fuelAvailable, Fuel typeFuel, string? namePump)
         {
-            this.fuelAvailable = FuelAvailable;
+            this.codPump = codPump;
+            this.pumpCapacity = pumpCapacity;
+            this.fuelAvailable = fuelAvailable;
+            this.typeFuel = typeFuel;
+            this.namePump = namePump;
         }
 
-        public void setTypeFuel(Fuel fuel)
-        {
-            typeFuel= fuel;
-        }
-        public void setDescPump(string descPump)
-        {
-            this.descPump = descPump;
-        }
+        #endregion
 
-        public void setCodPump(int cod)
-        {
-            this.codPump = cod;
-        }
-
-        public int getCodPump()
-        {
-            if (codPump != null)
-                return (int)codPump;
-            else
-                throw new Exception("Ocorreu um erro");
-        }
     }
 }

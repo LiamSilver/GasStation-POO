@@ -81,7 +81,7 @@ namespace GasStation.Persistence.DAL
         public Client SearchOne(string cpf)
         {
             Client client = new();
-            Address address = new();
+            Address? address = new();
 
             _sqlConnection.Open();
 
@@ -101,9 +101,14 @@ namespace GasStation.Persistence.DAL
             SqlDataReader reader = command.ExecuteReader();
 
             reader.Read();
-
-
+            address = new(reader.GetString(5), reader.GetString(7), reader.GetString(6), reader.GetString(9), reader.GetString(8));
+            client = new(reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), address);
             reader.Close();
+
+
+            _sqlConnection.Close();
+            return client;
+        }
 
 
         private static int hasCpf(SqlCommand command)
@@ -139,7 +144,7 @@ namespace GasStation.Persistence.DAL
             command.CommandText = "SELECT DescBomba, DescricaoCombustivel, QtdLitro, ValorLitro, ValorLitro*QtdLitro, DataVenda" +
                                   " FROM tbVENDA INNER JOIN tbBOMBA_COMBUSTIVEL ON (tbVENDA.CodBomba = tbBOMBA_COMBUSTIVEL.CodBomba)"+
                                   $" inner join tbCOMBUSTIVEL on (tbBOMBA_COMBUSTIVEL.TipoCombustivel=tbCOMBUSTIVEL.CodCombustivel) WHERE CpfCliente = '{cpf}'"+
-                                  " Order by DataVenda";
+                                  " Order by DataVenda DESC";
 
             SqlDataReader reader = command.ExecuteReader();
 

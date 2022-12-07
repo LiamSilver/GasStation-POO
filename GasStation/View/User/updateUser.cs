@@ -11,7 +11,7 @@ namespace GasStation.View.User
         {
             InitializeComponent();
         }
-
+        #region utils
         private void unlockFields()
         {
             if (btnSearch.Text == "Buscar")
@@ -62,12 +62,27 @@ namespace GasStation.View.User
             mtxbCpf.Text = "";
         }
 
+        private void fillFields(Client client)
+        {
+            txbName.Text = client.name;
+            txbCity.Text = client.address.localidade;
+            txbNeighbourhood.Text = client.address.bairro;
+            txbStreet.Text = client.address.logradouro;
+            mtxbPhone.Text = client.phone;
+            mtxbPhone2.Text = client.phone2;
+            cbxState.Text = client.address.uf;
+            mtxbZipCode.Text = client.address.cep;
+        }
+
+
+        #endregion
+
         #region API CEP
         private void mtxbZipCode_Leave(object sender, EventArgs e)
         {
             if (mtxbZipCode.Text.Length == 8)
             {
-                Address? address = new();
+                Address? address = new(mtxbZipCode.Text);
                 address = address.cepSearch(mtxbZipCode.Text);
                 if (address.cep != null)
                     dataFoundZipCode(address);
@@ -100,43 +115,7 @@ namespace GasStation.View.User
 
         #endregion
 
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string connectionString = ConfigurationManager.ConnectionStrings["GasStation"].ConnectionString;
-
-                UserDAL dal = new UserDAL(new SqlConnection(connectionString));
-                Client client = new();
-                client = dal.SearchOne(mtxbCpf.Text);
-                fillFields(client);
-
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show($"{ex.Message}");
-                mtxbCpf.Focus();
-                return;
-            }
-
-            unlockFields();
-
-
-        }
-
-        private void fillFields(Client client)
-        {
-            txbName.Text = client.name;
-            txbCity.Text = client.address.localidade;
-            txbNeighbourhood.Text = client.address.bairro;
-            txbStreet.Text = client.address.logradouro;
-            mtxbPhone.Text = client.phone;
-            mtxbPhone2.Text = client.phone2;
-            cbxState.Text = client.address.uf;
-            mtxbZipCode.Text = client.address.cep;
-        }
-
+        #region keypress
         private void mtxbCpf_KeyUp(object sender, KeyEventArgs e)
         {
             if(mtxbCpf.MaskCompleted == true)
@@ -148,17 +127,12 @@ namespace GasStation.View.User
                 btnSearch.Enabled = false;
             }
         }
+        #endregion
 
-        private bool cepIsValid()
-        {
-            if(mtxbZipCode.MaskFull == false) throw new Exception("Digite o CEP completo");
-            
-
-            return true;
-        }
+        #region update
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (txbName.Text != "ADMIN")
+            if (txbName.Text != "ADMIN" && mtxbCpf.Text=="00000000000")
             {
                 MessageBox.Show("Não é possivel alterar o nome do usuario ADMIN", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -186,55 +160,64 @@ namespace GasStation.View.User
 
             if (result == DialogResult.Yes)
             {
-                if (cepIsValid())
+                try
                 {
                     dal.Update(client);
                     MessageBox.Show("Dados atualizados com sucesso", "Sucesso");
                     unlockFields();
                 }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
             }
         }
 
-        private Address getAddress(Address address)
-        {
-                address.setCep(mtxbZipCode.Text);
-                address.setNeighbourhood(txbNeighbourhood.Text);
-                address.setCity(txbCity.Text);
-                address.setState(cbxState.Text);
-                address.setStreet(txbStreet.Text);
-                return address;
-        }
+        #endregion
 
-        private Client getClient(Client client, Address address)
-        {
-            if (txbName.Text == "")
-            {
-                throw new Exception("Digite o nome: ");
-            }
-            client.setName(txbName.Text.ToUpper());
-            client.setCpf(mtxbCpf.Text.ToUpper());
-            client.setPhone(mtxbPhone.Text.ToUpper());
-            client.setPhone2(mtxbPhone2.Text.ToUpper());
-            client.setAddress(address);
-            return client;
-        }
+        #region search
         private Client getData()
         {
             try
             {
-                Address address = new();
-                address = getAddress(address);
-
+                Address address = new(mtxbZipCode.Text, txbCity.Text, txbNeighbourhood.Text, txbStreet.Text, cbxState.Text);
                 Client client = new();
-                client = getClient(client, address);
+                client = new(txbName.Text, mtxbCpf.Text, mtxbPhone.Text, mtxbPhone2.Text, address);
                 return client;
 
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["GasStation"].ConnectionString;
+
+                UserDAL dal = new UserDAL(new SqlConnection(connectionString));
+                Client client = new();
+                client = dal.SearchOne(mtxbCpf.Text);
+                fillFields(client);
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show($"{ex.Message}");
+                mtxbCpf.Focus();
+                return;
+            }
+
+            unlockFields();
+
+
+        }
+
+        #endregion
     }
 }

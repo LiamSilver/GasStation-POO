@@ -21,6 +21,7 @@ namespace GasStation.View.User
             InitializeComponent();
         }
 
+        #region keypress
         private void mtxbCpf_KeyUp(object sender, KeyEventArgs e)
         {
             if (mtxbCpf.MaskCompleted == true)
@@ -33,7 +34,9 @@ namespace GasStation.View.User
             }
 
         }
+        #endregion
 
+        #region search
         private void btnSearch_Click(object sender, EventArgs e)
         {
             try
@@ -57,6 +60,9 @@ namespace GasStation.View.User
             changeSearchButton();
         }
 
+        #endregion
+
+        #region utils
         private void changeSearchButton()
         {
             if (btnSearch.Text == "Buscar")
@@ -100,5 +106,6 @@ namespace GasStation.View.User
             mtxbCpf.Text = "";
         }
 
+        #endregion
     }
 }

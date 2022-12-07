@@ -22,8 +22,7 @@ namespace GasStation.Persistence.DAL
 
         public FuelPump getPump(int cod)
         {
-            FuelPump pump = new();
-            Fuel fuel = new();
+            FuelPump pump1 = new FuelPump();
             _sqlConnection.Open();
 
             string SQL = "SELECT capacidadeMaxima,DescBomba,QtdCombustivelAtual,ValorCombustivel,DescricaoCombustivel,CodCombustivel " +
@@ -33,7 +32,7 @@ namespace GasStation.Persistence.DAL
 
             SqlCommand command = _sqlConnection.CreateCommand();
 
-            command.CommandText = limitedSQL; 
+            command.CommandText = limitedSQL;
             //"SELECT capacidadeMaxima,DescBomba,QtdCombustivelAtual,ValorCombustivel,DescricaoCombustivel,CodCombustivel " +
             // "FROM tbBOMBA_COMBUSTIVEL INNER JOIN tbCOMBUSTIVEL ON (tbBOMBA_COMBUSTIVEL.TipoCombustivel = tbCOMBUSTIVEL.CodCombustivel) WHERE CodBomba = @CodBomba";
 
@@ -41,10 +40,25 @@ namespace GasStation.Persistence.DAL
 
             SqlDataReader reader = command.ExecuteReader();
 
-            read(pump, fuel, reader);
+            reader.Read();
+            try
+            {
+                Fuel fuel = new(reader.GetInt32(6), reader.GetString(5), reader.GetDecimal(4));
+                FuelPump pump = new(++cod,reader.GetDecimal(1), reader.GetDecimal(3), fuel, reader.GetString(2));
+                pump1 = pump;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Não tem outra bomba no momento");
+            }
+
+            reader.Close();
+
             _sqlConnection.Close();
 
-            return pump;
+            return pump1;
 
         }
 
@@ -67,34 +81,6 @@ namespace GasStation.Persistence.DAL
 
             return count;
         }
-
-        private static void read(FuelPump pump, Fuel fuel, SqlDataReader reader)
-        {
-            reader.Read();
-            setReaderInPump(pump, fuel, reader);
-            reader.Close();
-        }
-
-        private static void setReaderInPump(FuelPump pump, Fuel fuel, SqlDataReader reader)
-        {
-            try
-            {
-                pump.setCapacity(reader.GetDecimal(1));
-                pump.setDescPump(reader.GetString(2));
-                pump.setFuelAvailable(reader.GetDecimal(3));
-                fuel.setDesc(reader.GetString(5));
-                fuel.setFuelPrice(reader.GetDecimal(4));
-                fuel.setCod(reader.GetInt32(6));
-                pump.setTypeFuel(fuel);
-
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception("Não tem outra bomba no momento");
-            }
-        }
-
         public void supplyPump(int cod)
         {
             _sqlConnection.Open();

@@ -32,8 +32,6 @@ namespace GasStation.Persistence.DAL
 
         public FuelPump searchPumpByFuelId(int fuelId)
         {
-            FuelPump pump = new();
-            Fuel fuel = new();
             _sqlConnection.Open();
 
             SqlCommand command = _sqlConnection.CreateCommand();
@@ -44,14 +42,8 @@ namespace GasStation.Persistence.DAL
             SqlDataReader reader = command.ExecuteReader();
 
             reader.Read();
-            fuel.setCod(reader.GetInt32(0));
-            fuel.setFuelPrice(reader.GetDecimal(1));
-            fuel.setDesc(reader.GetString(2));
-            pump.setCodPump(reader.GetInt32(3));
-            pump.setCapacity(reader.GetDecimal(4));
-            pump.setTypeFuel(fuel);
-            pump.setDescPump(reader.GetString(6));
-            pump.setFuelAvailable(reader.GetDecimal(7));
+            Fuel fuel = new(reader.GetInt32(0), reader.GetString(2), reader.GetDecimal(1));
+            FuelPump pump = new(reader.GetInt32(3), reader.GetDecimal(4), reader.GetDecimal(7), fuel, reader.GetString(6));
             reader.Close();
 
             _sqlConnection.Close();

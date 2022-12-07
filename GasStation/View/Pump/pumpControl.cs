@@ -26,6 +26,8 @@ namespace GasStation.View.Pump
             loadHistoric();
         }
 
+
+        #region load
         private void loadPump()
         {
             try
@@ -59,68 +61,8 @@ namespace GasStation.View.Pump
                 MessageBox.Show($"{ex.Message}");
             }
         }
-        private void fillFields(FuelPump pump)
-        {
-            lblFuelName.Text = pump.typeFuel.descFuel;
-            txbFuelPrice.Text = Convert.ToString(pump.typeFuel.fuelPrice);
-
-            lblPumpName.Text = pump.descPump;
-            lblCapacity.Text = Convert.ToString(pump.pumpCapacity) + " Litros";
-            lblFuel.Text = Convert.ToString(pump.fuelAvailable) + " Litros";
-        }
-        private static PumpDAL dbConnection()
-        {
-            string connectionString = ConfigurationManager.ConnectionStrings["GasStation"].ConnectionString;
-            PumpDAL dal = new PumpDAL(new SqlConnection(connectionString));
-            return dal;
-        }
-
-        private static FuelDAL dbConnectionFuel()
-        {
-            string connectionString = ConfigurationManager.ConnectionStrings["GasStation"].ConnectionString;
-            FuelDAL dal = new FuelDAL(new SqlConnection(connectionString));
-            return dal;
-
-        }
 
 
-        private void btnNextPump_Click(object sender, EventArgs e)
-        {
-
-            try
-            {
-                FuelPump pump = getDataPump(++CodPump);
-                fillFields(pump);
-                btnPreviousPump.Enabled = true;
-                dgvHistoric.Rows.Clear();
-                loadHistoric();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"{ex.Message}","Aviso",MessageBoxButtons.OK);
-                CodPump--;
-                btnNextPump.Enabled = false;
-            }
-        }
-
-        private void btnPreviousPump_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                FuelPump pump = getDataPump(--CodPump);
-                fillFields(pump);
-                btnNextPump.Enabled = true;
-                dgvHistoric.Rows.Clear();
-                loadHistoric();
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"{ex.Message}", "Aviso", MessageBoxButtons.OK);
-                CodPump++;
-                btnPreviousPump.Enabled = false;
-            }
-        }
 
         private FuelPump getDataPump(int cod)
         {
@@ -129,12 +71,9 @@ namespace GasStation.View.Pump
             pump = dal.getPump(cod);
             return pump;
         }
-        
-        private void btnChangePrice_Click(object sender, EventArgs e)
-        {
-            verifyNewPrice();
-        }
 
+        #endregion
+        #region price
         private void verifyNewPrice()
         {
             if (txbFuelPrice.TextLength != 0)
@@ -190,6 +129,9 @@ namespace GasStation.View.Pump
 
         }
 
+        #endregion
+
+        #region utils
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -218,15 +160,20 @@ namespace GasStation.View.Pump
             btnNextPump.Enabled = true;
             btnPreviousPump.Enabled = true;
         }
-
-        private void txbFuelPrice_Enter(object sender, EventArgs e)
+        private void fillFields(FuelPump pump)
         {
-            if (txbFuelPrice.TextLength <= 0)
-            {
-                btnChangePrice.Enabled = false;
-            }
+            lblFuelName.Text = pump.typeFuel.nameFuel;
+            txbFuelPrice.Text = Convert.ToString(pump.typeFuel.FuelPrice);
+
+            lblPumpName.Text = pump.namePump;
+            lblCapacity.Text = Convert.ToString(pump.pumpCapacity) + " Litros";
+            lblFuel.Text = Convert.ToString(pump.fuelAvailable) + " Litros";
         }
 
+
+        #endregion
+
+        #region keypress
         private void txbFuelPrice_TextChanged(object sender, EventArgs e)
         {
          }
@@ -269,6 +216,9 @@ namespace GasStation.View.Pump
             }
         }
 
+        #endregion
+
+        #region buttons click
         private void btnFillPump_Click(object sender, EventArgs e)
         {
             if(string.Equals(lblCapacity.Text,lblFuel.Text))
@@ -293,6 +243,68 @@ namespace GasStation.View.Pump
             }
             
         }
+        private void btnNextPump_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                FuelPump pump = getDataPump(++CodPump);
+                fillFields(pump);
+                btnPreviousPump.Enabled = true;
+                dgvHistoric.Rows.Clear();
+                loadHistoric();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message}", "Aviso", MessageBoxButtons.OK);
+                CodPump--;
+                btnNextPump.Enabled = false;
+            }
+        }
+
+        private void btnPreviousPump_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FuelPump pump = getDataPump(--CodPump);
+                fillFields(pump);
+                btnNextPump.Enabled = true;
+                dgvHistoric.Rows.Clear();
+                loadHistoric();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message}", "Aviso", MessageBoxButtons.OK);
+                CodPump++;
+                btnPreviousPump.Enabled = false;
+            }
+        }
+        private void btnChangePrice_Click(object sender, EventArgs e)
+        {
+            verifyNewPrice();
+        }
+
+        #endregion
+
+        #region dbConnection
+        private static PumpDAL dbConnection()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["GasStation"].ConnectionString;
+            PumpDAL dal = new PumpDAL(new SqlConnection(connectionString));
+            return dal;
+        }
+
+        private static FuelDAL dbConnectionFuel()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["GasStation"].ConnectionString;
+            FuelDAL dal = new FuelDAL(new SqlConnection(connectionString));
+            return dal;
+
+        }
+
+        #endregion
+
     }
 }
 

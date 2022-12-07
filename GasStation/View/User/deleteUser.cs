@@ -21,6 +21,7 @@ namespace GasStation.View.User
             InitializeComponent();
         }
 
+        #region search
         private void btnSearch_Click(object sender, EventArgs e)
         {
             try
@@ -43,6 +44,10 @@ namespace GasStation.View.User
 
             unlockDeleteButton();
         }
+
+        #endregion
+
+        #region delete
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (mtxbCpf.Text == "00000000000")
@@ -80,7 +85,7 @@ namespace GasStation.View.User
                 try
                 {
                     dal.Delete(mtxbCpf.Text);
-                    MessageBox.Show("Usuário deleta com sucesso!", "Sucesso");
+                    MessageBox.Show("Usuário deletado com sucesso!", "Sucesso");
 
                     unlockAndClean();
                 }
@@ -91,8 +96,9 @@ namespace GasStation.View.User
                 }
             }
         }
+        #endregion 
 
-        #region functions aux
+        #region utils
         private void unlockDeleteButton()
         {
             if(btnSearch.Text == "Buscar")
@@ -123,19 +129,6 @@ namespace GasStation.View.User
             mtxbZipCode.Text = client.address.cep;
         }
 
-        private void mtxbCpf_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (mtxbCpf.MaskCompleted == true)
-            {
-                btnSearch.Enabled = true;
-            }
-            else
-            {
-                btnSearch.Enabled = false;
-            }
-
-        }
-
         private void cleanFields()
         {
             txbName.Text = "";
@@ -158,6 +151,20 @@ namespace GasStation.View.User
 
         #endregion
 
+        #region keypress
+        private void mtxbCpf_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (mtxbCpf.MaskCompleted == true)
+            {
+                btnSearch.Enabled = true;
+            }
+            else
+            {
+                btnSearch.Enabled = false;
+            }
 
+        }
+
+        #endregion
     }
 }

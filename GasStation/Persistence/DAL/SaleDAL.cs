@@ -17,7 +17,7 @@ namespace GasStation.Persistence.DAL
             _sqlConnection = connection;
         }
 
-        public void sale(Sell sell)
+        public void insert(Sell sell)
         {
             _sqlConnection.Open();
 
@@ -32,8 +32,8 @@ namespace GasStation.Persistence.DAL
                                  " VALUES (@Client, @Pump, @Price, @Liter)";
 
             command.Parameters.AddWithValue("@Client", sell.client.cpf);
-            command.Parameters.AddWithValue("@Pump",sell.pump.getCodPump());
-            command.Parameters.AddWithValue("@Price", sell.pump.typeFuel.fuelPrice);
+            command.Parameters.AddWithValue("@Pump",sell.pump.codPump);
+            command.Parameters.AddWithValue("@Price", sell.pump.typeFuel.FuelPrice);
             command.Parameters.AddWithValue("@Liter", sell.liter);
 
             command.ExecuteNonQuery();
@@ -49,7 +49,7 @@ namespace GasStation.Persistence.DAL
 
             update.CommandText = "UPDATE tbBOMBA_COMBUSTIVEL SET QtdCombustivelAtual = QtdCombustivelAtual - @Liter WHERE CodBomba = @CodPump";
             update.Parameters.AddWithValue("@Liter", sell.liter);
-            update.Parameters.AddWithValue("@CodPump", sell.pump.getCodPump());
+            update.Parameters.AddWithValue("@CodPump", sell.pump.codPump);
 
             update.ExecuteNonQuery();
         }

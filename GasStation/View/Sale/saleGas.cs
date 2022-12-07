@@ -25,6 +25,7 @@ namespace GasStation.View.Sale
             loadFuel();
         }
 
+        #region load
         private void loadFuel()
         {
             PumpDAL dal = dbConnectionPump();
@@ -33,10 +34,18 @@ namespace GasStation.View.Sale
             for(int cod=0; cod<counter; cod++)
             {
                 FuelPump pump = dal.getPump(cod);
-                cbFuel.Items.Add(pump.typeFuel.descFuel);
+                cbFuel.Items.Add(pump.typeFuel.nameFuel);
             }
             cbFuel.SelectedIndex = 0;
         }
+        private void loadPump()
+        {
+            FuelPump pump = searchPump();
+
+            fillPumpFields(pump);
+        }
+
+        #endregion
 
         #region ConnectionDB
         private static UserDAL dbConnectionUser()
@@ -65,6 +74,8 @@ namespace GasStation.View.Sale
             return dal;
         }
         #endregion
+
+        #region utils
         private void cbCpfAdmin_CheckedChanged(object sender, EventArgs e)
         {
             if (!cbCpfAdmin.Checked)
@@ -101,24 +112,6 @@ namespace GasStation.View.Sale
 
         }
 
-        private void mtxbCpf_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (mtxbCpf.MaskCompleted)
-            {
-                btnSearchClient.Enabled = true;
-                if(lblName.Text!="")
-                    btnSell.Enabled = true;
-            }
-            else
-            {
-                btnSearchClient.Enabled = false;
-                if(!cbCpfAdmin.Checked && !mtxbCpf.MaskCompleted)
-                    btnSell.Enabled = false;
-                resetClientFlelds();
-            }
-
-        }
-
         private void resetClientFlelds()
         {
             lblName.Text = "";
@@ -126,10 +119,12 @@ namespace GasStation.View.Sale
         }
         private void fillPumpFields(FuelPump pump)
         {
-            lblFuelPrice.Text = "R$ " + Convert.ToString(pump.typeFuel.fuelPrice) + " Litro";
+            lblFuelPrice.Text = "R$ " + Convert.ToString(pump.typeFuel.FuelPrice) + " Litro";
             lblLabelFuelAvailable.Text = "Combustível disponível: " + pump.fuelAvailable + " Litros";
-            lblPump.Text = pump.descPump;
+            lblPump.Text = pump.namePump;
         }
+
+        #endregion
 
         #region Search
         private void btnSearchClient_Click(object sender, EventArgs e)
@@ -162,14 +157,6 @@ namespace GasStation.View.Sale
             updatePriceByLiter();
             updatePricebyMoney();
         }
-
-        private void loadPump()
-        {
-            FuelPump pump = searchPump();
-
-            fillPumpFields(pump);
-        }
-
         private FuelPump searchPump()
         {
             int cod = cbFuel.SelectedIndex;
@@ -180,9 +167,28 @@ namespace GasStation.View.Sale
             return pump;
         }
 
+
         #endregion
 
         #region keypress
+        private void mtxbCpf_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (mtxbCpf.MaskCompleted)
+            {
+                btnSearchClient.Enabled = true;
+                if (lblName.Text != "")
+                    btnSell.Enabled = true;
+            }
+            else
+            {
+                btnSearchClient.Enabled = false;
+                if (!cbCpfAdmin.Checked && !mtxbCpf.MaskCompleted)
+                    btnSell.Enabled = false;
+                resetClientFlelds();
+            }
+
+        }
+
         private void saleGas_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = true;
@@ -242,6 +248,11 @@ namespace GasStation.View.Sale
             updatePriceByLiter();
         }
 
+        private void txbMoney_TextChanged(object sender, EventArgs e)
+        {
+            updatePricebyMoney();
+        }
+
         #endregion
 
         #region updatePrices
@@ -252,7 +263,7 @@ namespace GasStation.View.Sale
                 FuelPump pump = searchPump();
                 decimal price;
 
-                price = Convert.ToDecimal(txbMoney.Text) / pump.typeFuel.fuelPrice;
+                price = Convert.ToDecimal(txbMoney.Text) / pump.typeFuel.FuelPrice;
                 lblQtdLiter.Text = price.ToString("N2") + " Litros";
 
             }
@@ -264,17 +275,15 @@ namespace GasStation.View.Sale
 
             decimal price;
 
-            price = nudLiter.Value * pump.typeFuel.fuelPrice;
+            price = nudLiter.Value * pump.typeFuel.FuelPrice;
             lblMoneyByLiters.Text = price.ToString("N2") + " Reais";
         }
 
-        private void txbMoney_TextChanged(object sender, EventArgs e)
-        {
-            updatePricebyMoney();
-        }
 
         #endregion
 
+
+        #region sell
         private void btnSell_Click(object sender, EventArgs e)
         {
             try
@@ -298,9 +307,9 @@ namespace GasStation.View.Sale
             insertLiterInSell(sell);
 
             SaleDAL sale = dbConnectionSale();
-            sale.sale(sell);
+            sale.insert(sell);
 
-            MessageBox.Show($"Abastecimento realizado com sucesso! Foi abastecido {sell.getAmount().ToString("N2")} Reais", "Abastecimento Concluído", MessageBoxButtons.OK);
+            MessageBox.Show($"Abastecimento realizado com sucesso! Foi abastecido {sell.Amount.ToString("N2")} Reais", "Abastecimento Concluído", MessageBoxButtons.OK);
             loadPump();
         }
 
@@ -332,5 +341,6 @@ namespace GasStation.View.Sale
                 return nudLiter.Value;
             }
         }
+        #endregion
     }
 }

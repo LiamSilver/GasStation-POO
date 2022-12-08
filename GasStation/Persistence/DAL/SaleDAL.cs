@@ -59,6 +59,19 @@ namespace GasStation.Persistence.DAL
             _sqlConnection.Close();
             return false;
         }
+
+        public void deleteSell(int codCompra)
+        {
+            _sqlConnection.Open();
+
+            SqlCommand command = _sqlConnection.CreateCommand();
+
+            command.CommandText = "UPDATE tbVENDA SET Situacao = 'CANCELADA' WHERE CodClienteVenda = @Cod";
+            command.Parameters.AddWithValue("@Cod",codCompra);
+
+            command.ExecuteNonQuery();
+            _sqlConnection.Close();
+        }
         private void updatePumpGasAvailable(Sell sell)
         {
             SqlCommand update = _sqlConnection.CreateCommand();
@@ -80,6 +93,7 @@ namespace GasStation.Persistence.DAL
 
             else return true;
         }
+
 
     }
 }

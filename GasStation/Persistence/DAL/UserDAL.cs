@@ -131,7 +131,7 @@ namespace GasStation.Persistence.DAL
             {
                 throw new Exception("CPF já cadastrado");
             }
-            
+
             return false;
         }
 
@@ -141,9 +141,9 @@ namespace GasStation.Persistence.DAL
 
             SqlCommand command = _sqlConnection.CreateCommand();
 
-            command.CommandText = "SELECT DescBomba, DescricaoCombustivel, QtdLitro, ValorLitro, ValorLitro*QtdLitro, DataVenda, Situacao" +
-                                  " FROM tbVENDA INNER JOIN tbBOMBA_COMBUSTIVEL ON (tbVENDA.CodBomba = tbBOMBA_COMBUSTIVEL.CodBomba)"+
-                                  $" inner join tbCOMBUSTIVEL on (tbBOMBA_COMBUSTIVEL.TipoCombustivel=tbCOMBUSTIVEL.CodCombustivel) WHERE CpfCliente = '{cpf}'"+
+            command.CommandText = "SELECT CodClienteVenda, DescBomba, DescricaoCombustivel, QtdLitro, ValorLitro, ValorLitro*QtdLitro, DataVenda, Situacao, tbVENDA.CodBomba" +
+                                  " FROM tbVENDA INNER JOIN tbBOMBA_COMBUSTIVEL ON (tbVENDA.CodBomba = tbBOMBA_COMBUSTIVEL.CodBomba)" +
+                                  $" inner join tbCOMBUSTIVEL on (tbBOMBA_COMBUSTIVEL.TipoCombustivel=tbCOMBUSTIVEL.CodCombustivel) WHERE CpfCliente = '{cpf}' AND Situacao = 'ATIVO' " +
                                   " Order by DataVenda DESC";
 
             SqlDataReader reader = command.ExecuteReader();
@@ -151,16 +151,50 @@ namespace GasStation.Persistence.DAL
             string[] data = new string[reader.FieldCount];
             while (reader.Read())
             {
-                data[0] = reader.GetString(0);
+                data[0] = reader.GetInt32(0).ToString();
                 data[1] = reader.GetString(1);
-                data[2] = reader.GetDecimal(2).ToString("N2") +" L";
-                data[3] = "R$: "+ reader.GetDecimal(3).ToString("N3");
-                data[4] = "R$: " + reader.GetDecimal(4).ToString("N2");
-                data[5] = reader.GetDateTime(5).Date.ToString();
-                data[6] = reader.GetString(6);
+                data[2] = reader.GetString(2);
+                data[3] = reader.GetDecimal(3).ToString("N2") + " L";
+                data[4] = "R$: " + reader.GetDecimal(4).ToString("N3");
+                data[5] = "R$: " + reader.GetDecimal(5).ToString("N2");
+                data[6] = reader.GetDateTime(6).Date.ToString();
+                data[7] = reader.GetString(7);
+                data[8] = reader.GetInt32(8).ToString();
                 dgv.Rows.Add(data);
             }
             _sqlConnection.Close();
         }
+
+        public void getPurchasesbyFuel(DataGridView dgv, int pump, string cpf = "00000000000")
+        {
+            _sqlConnection.Open();
+
+            SqlCommand command = _sqlConnection.CreateCommand();
+
+            command.CommandText = "SELECT CodClienteVenda, DescBomba, DescricaoCombustivel, QtdLitro, ValorLitro, ValorLitro*QtdLitro, DataVenda, Situacao, tbVENDA.CodBomba" +
+                                  " FROM tbVENDA INNER JOIN tbBOMBA_COMBUSTIVEL ON (tbVENDA.CodBomba = tbBOMBA_COMBUSTIVEL.CodBomba)" +
+                                  $" inner join tbCOMBUSTIVEL on (tbBOMBA_COMBUSTIVEL.TipoCombustivel=tbCOMBUSTIVEL.CodCombustivel) WHERE CpfCliente = '{cpf}' AND Situacao = 'ATIVO' AND  tbVENDA.CodBomba= {pump}" +
+                                  " Order by DataVenda DESC";
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            string[] data = new string[reader.FieldCount];
+            while (reader.Read())
+            {
+                data[0] = reader.GetInt32(0).ToString();
+                data[1] = reader.GetString(1);
+                data[2] = reader.GetString(2);
+                data[3] = reader.GetDecimal(3).ToString("N2") + " L";
+                data[4] = "R$: " + reader.GetDecimal(4).ToString("N3");
+                data[5] = "R$: " + reader.GetDecimal(5).ToString("N2");
+                data[6] = reader.GetDateTime(6).Date.ToString();
+                data[7] = reader.GetString(7);
+                data[8] = reader.GetInt32(8).ToString();
+                dgv.Rows.Add(data);
+            }
+            _sqlConnection.Close();
+        }
+
     }
 }
+

@@ -20,6 +20,7 @@ namespace GasStation.View.User
         {
             InitializeComponent();
         }
+        string connectionString = ConfigurationManager.ConnectionStrings["GasStation"].ConnectionString;
 
         #region keypress
         private void mtxbCpf_KeyUp(object sender, KeyEventArgs e)
@@ -41,13 +42,13 @@ namespace GasStation.View.User
         {
             try
             {
-                string connectionString = ConfigurationManager.ConnectionStrings["GasStation"].ConnectionString;
-
                 UserDAL dal = new UserDAL(new SqlConnection(connectionString));
                 Client client = new();
+
                 client = dal.SearchOne(mtxbCpf.Text);
                 fillFields(client);
-                dal.getPurchases(dgvUser, mtxbCpf.Text);
+
+                fillDgv();
             }
             catch (Exception ex)
             {
@@ -58,6 +59,16 @@ namespace GasStation.View.User
             }
 
             changeSearchButton();
+        }
+
+        private void searchPurchasesClientByFuel()
+        {
+            SaleDAL dal = new SaleDAL(new SqlConnection(connectionString));
+
+            int pump = Convert.ToInt32(dgvUser.CurrentRow.Cells[8].Value);
+            dgvUser.Rows.Clear();
+            fillDgvByFuel(pump);
+
         }
 
         #endregion
@@ -105,8 +116,78 @@ namespace GasStation.View.User
             mtxbZipCode.Text = "";
             mtxbCpf.Text = "";
         }
+        private void fillDgv()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["GasStation"].ConnectionString;
+
+            UserDAL dal = new UserDAL(new SqlConnection(connectionString));
+            dal.getPurchases(dgvUser, mtxbCpf.Text);
+        }
+
+        private void fillDgvByFuel(int pump)
+        {
+            UserDAL dal = new UserDAL(new SqlConnection(connectionString));
+            dal.getPurchasesbyFuel(dgvUser, pump, mtxbCpf.Text);
+        }
 
         #endregion
 
+        #region delete 
+
+        private void deleteSell()
+        {
+            SaleDAL dal = new SaleDAL(new SqlConnection(connectionString));
+
+            int cod = Convert.ToInt32(dgvUser.CurrentRow.Cells[0].Value);
+            dal.deleteSell(cod);
+            dgvUser.Rows.Clear();
+            fillDgv();
+        }
+
+        #endregion
+
+        #region dgv Click
+
+        private void dgvUser_DoubleClick(object sender, EventArgs e)
+        {
+            if (dgvUser.CurrentCell.ColumnIndex == 7)
+            {
+                dgvUser.CurrentRow.Selected = true;
+                DialogResult result = MessageBox.Show("Você tem certeza que quer cancelar essa venda? ", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        deleteSell();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        MessageBox.Show($"{ex.Message}");
+                    }
+                }
+
+            }
+
+            if (dgvUser.CurrentCell.ColumnIndex == 2)
+            {
+                DialogResult result = MessageBox.Show("Voce quer filtrar pelos tipos de combustivel que esse cliente comprou?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        searchPurchasesClientByFuel();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"{ex.Message}");
+                    }
+                }
+            }
+        }
+
+        #endregion
     }
 }

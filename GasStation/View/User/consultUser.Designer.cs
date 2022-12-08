@@ -49,6 +49,7 @@
             this.lblZipCode = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.dgvUser = new System.Windows.Forms.DataGridView();
+            this.cSellCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cPump = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cFuel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cLiter = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -56,6 +57,7 @@
             this.vTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cSituation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cCodPump = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUser)).BeginInit();
             this.SuspendLayout();
             // 
@@ -302,13 +304,15 @@
             this.dgvUser.AllowUserToDeleteRows = false;
             this.dgvUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUser.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.cSellCode,
             this.cPump,
             this.cFuel,
             this.cLiter,
             this.cPrice,
             this.vTotal,
             this.cDate,
-            this.cSituation});
+            this.cSituation,
+            this.cCodPump});
             this.dgvUser.GridColor = System.Drawing.SystemColors.Control;
             this.dgvUser.Location = new System.Drawing.Point(77, 402);
             this.dgvUser.Name = "dgvUser";
@@ -316,6 +320,15 @@
             this.dgvUser.RowTemplate.Height = 29;
             this.dgvUser.Size = new System.Drawing.Size(899, 188);
             this.dgvUser.TabIndex = 96;
+            this.dgvUser.DoubleClick += new System.EventHandler(this.dgvUser_DoubleClick);
+            // 
+            // cSellCode
+            // 
+            this.cSellCode.HeaderText = "CodVenda";
+            this.cSellCode.MinimumWidth = 6;
+            this.cSellCode.Name = "cSellCode";
+            this.cSellCode.Visible = false;
+            this.cSellCode.Width = 125;
             // 
             // cPump
             // 
@@ -371,6 +384,14 @@
             this.cSituation.MinimumWidth = 6;
             this.cSituation.Name = "cSituation";
             this.cSituation.Width = 125;
+            // 
+            // cCodPump
+            // 
+            this.cCodPump.HeaderText = "CodPump";
+            this.cCodPump.MinimumWidth = 6;
+            this.cCodPump.Name = "cCodPump";
+            this.cCodPump.Visible = false;
+            this.cCodPump.Width = 125;
             // 
             // consultUser
             // 
@@ -435,6 +456,7 @@
         private Label lblZipCode;
         private Label lblTitle;
         private DataGridView dgvUser;
+        private DataGridViewTextBoxColumn cSellCode;
         private DataGridViewTextBoxColumn cPump;
         private DataGridViewTextBoxColumn cFuel;
         private DataGridViewTextBoxColumn cLiter;
@@ -442,5 +464,6 @@
         private DataGridViewTextBoxColumn vTotal;
         private DataGridViewTextBoxColumn cDate;
         private DataGridViewTextBoxColumn cSituation;
+        private DataGridViewTextBoxColumn cCodPump;
     }
 }

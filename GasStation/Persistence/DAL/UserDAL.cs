@@ -141,7 +141,7 @@ namespace GasStation.Persistence.DAL
 
             SqlCommand command = _sqlConnection.CreateCommand();
 
-            command.CommandText = "SELECT DescBomba, DescricaoCombustivel, QtdLitro, ValorLitro, ValorLitro*QtdLitro, DataVenda" +
+            command.CommandText = "SELECT DescBomba, DescricaoCombustivel, QtdLitro, ValorLitro, ValorLitro*QtdLitro, DataVenda, Situacao" +
                                   " FROM tbVENDA INNER JOIN tbBOMBA_COMBUSTIVEL ON (tbVENDA.CodBomba = tbBOMBA_COMBUSTIVEL.CodBomba)"+
                                   $" inner join tbCOMBUSTIVEL on (tbBOMBA_COMBUSTIVEL.TipoCombustivel=tbCOMBUSTIVEL.CodCombustivel) WHERE CpfCliente = '{cpf}'"+
                                   " Order by DataVenda DESC";
@@ -157,7 +157,7 @@ namespace GasStation.Persistence.DAL
                 data[3] = "R$: "+ reader.GetDecimal(3).ToString("N3");
                 data[4] = "R$: " + reader.GetDecimal(4).ToString("N2");
                 data[5] = reader.GetDateTime(5).Date.ToString();
-
+                data[6] = reader.GetString(6);
                 dgv.Rows.Add(data);
             }
             _sqlConnection.Close();

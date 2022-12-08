@@ -107,5 +107,6 @@ namespace GasStation.View.User
         }
 
         #endregion
+
     }
 }

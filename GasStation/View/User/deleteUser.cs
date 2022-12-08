@@ -62,6 +62,9 @@ namespace GasStation.View.User
 
                 UserDAL dal = new UserDAL(new SqlConnection(connectionString));
 
+                SaleDAL saleDAL = new SaleDAL(new SqlConnection(connectionString));
+                
+                if(saleDAL.searchClientHasPurchases(mtxbCpf.Text) == false)
                 deleteClient(dal);
             }
             catch (Exception ex)

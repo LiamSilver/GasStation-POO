@@ -55,6 +55,7 @@
             this.cPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cSituation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUser)).BeginInit();
             this.SuspendLayout();
             // 
@@ -306,11 +307,11 @@
             this.cLiter,
             this.cPrice,
             this.vTotal,
-            this.cDate});
+            this.cDate,
+            this.cSituation});
             this.dgvUser.GridColor = System.Drawing.SystemColors.Control;
             this.dgvUser.Location = new System.Drawing.Point(77, 402);
             this.dgvUser.Name = "dgvUser";
-            this.dgvUser.ReadOnly = true;
             this.dgvUser.RowHeadersWidth = 51;
             this.dgvUser.RowTemplate.Height = 29;
             this.dgvUser.Size = new System.Drawing.Size(899, 188);
@@ -363,6 +364,13 @@
             this.cDate.Name = "cDate";
             this.cDate.ReadOnly = true;
             this.cDate.Width = 125;
+            // 
+            // cSituation
+            // 
+            this.cSituation.HeaderText = "Situação";
+            this.cSituation.MinimumWidth = 6;
+            this.cSituation.Name = "cSituation";
+            this.cSituation.Width = 125;
             // 
             // consultUser
             // 
@@ -433,5 +441,6 @@
         private DataGridViewTextBoxColumn cPrice;
         private DataGridViewTextBoxColumn vTotal;
         private DataGridViewTextBoxColumn cDate;
+        private DataGridViewTextBoxColumn cSituation;
     }
 }

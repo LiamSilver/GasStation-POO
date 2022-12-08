@@ -42,7 +42,23 @@ namespace GasStation.Persistence.DAL
 
             _sqlConnection.Close();
         }
+        
+        public bool searchClientHasPurchases(string cpf)
+        {
 
+            _sqlConnection.Open();
+
+            SqlCommand command = _sqlConnection.CreateCommand();
+            command.CommandText = $"SELECT COUNT(CpfCliente) FROM tbVENDA WHERE CpfCliente = {cpf}";
+            int result = (int )command.ExecuteScalar();
+
+            if (result != 0)
+            throw new Exception("Não podemos apagar um cliente com compras");
+
+
+            _sqlConnection.Close();
+            return false;
+        }
         private void updatePumpGasAvailable(Sell sell)
         {
             SqlCommand update = _sqlConnection.CreateCommand();
@@ -64,5 +80,6 @@ namespace GasStation.Persistence.DAL
 
             else return true;
         }
+
     }
 }

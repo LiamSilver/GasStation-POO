@@ -21,6 +21,7 @@ namespace GasStation.Models
             this.literPrice = pump.typeFuel.FuelPrice;
         }
 
+
         public Client client { get { return _client; } private set { _client = value; } }
         public FuelPump pump { get { return _pump; } private set { _pump = value; } }
         public decimal literPrice { get { return _literPrice; } private set { _literPrice = value; } }
